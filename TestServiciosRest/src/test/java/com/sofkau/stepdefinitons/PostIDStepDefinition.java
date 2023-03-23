@@ -7,6 +7,9 @@ import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 import static com.sofkau.questions.ReturnGetResponse.returnGetResponse;
@@ -15,21 +18,31 @@ import static com.sofkau.utils.JsonPlaceHolderResources.JSONPLACE_BASE_URL;
 import static com.sofkau.utils.JsonPlaceHolderResources.POSTS_BY_ID_RESOURCE;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 
 public class PostIDStepDefinition extends ApiSetUp {
 
     public static Logger LOGGER= Logger.getLogger(PostIDStepDefinition.class);
+    JSONObject responseBody = null;
+    JSONParser parser = new JSONParser();
+    String id;
 
     @Given("El usuario se encuentra en la web de JsonPlaceHolder")
     public void elUsuarioSeEncuentraEnLaWebDeJsonPlaceHolder() {
-        setUp(JSONPLACE_BASE_URL.getValue());
+        try {
+            setUp(JSONPLACE_BASE_URL.getValue());
+            LOGGER.info("Empezando peticion");
+        }catch (Exception e){
+            LOGGER.warn(e.getMessage());
+        }
     }
 
     @When("El usuario envia una solicitud con el {string} del post deseado")
     public void elUsuarioEnviaUnaSolicitudConElDelPostDeseado(String idPost) {
         try {
+            id = idPost;
             actor.attemptsTo(
                     doGet()
                             .withTheResource(POSTS_BY_ID_RESOURCE.getValue() + idPost)
@@ -39,16 +52,21 @@ public class PostIDStepDefinition extends ApiSetUp {
         }
     }
     @Then("El usuario debe recibir un respuesta de status {int} y el post solicitado")
-    public void elUsuarioDebeRecibirUnRespuestaDeStatusYElPostSolicitado(Integer statusCode) {
-
-        Response actualResponse = returnGetResponse().answeredBy(actor);
-        actor.should(
-                seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
-                        response -> response.statusCode(statusCode)),
-                seeThat("Retorna información",
-                        act -> actualResponse, notNullValue())
-        );
-
-        //System.out.println(SerenityRest.lastResponse().body().asString());
+    public void elUsuarioDebeRecibirUnRespuestaDeStatusYElPostSolicitado(Integer statusCode) throws ParseException {
+        try {
+            Response actualResponse = returnGetResponse().answeredBy(actor);
+            responseBody = (JSONObject) parser.parse(actualResponse.getBody().asString());
+            actor.should(
+                    seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
+                            response -> response.statusCode(statusCode)),
+                    seeThat("Retorna información",
+                            act -> actualResponse, notNullValue()),
+                    seeThat("Comparar id",
+                            idC -> responseBody.get("id").toString(), equalTo(id))
+            );
+            LOGGER.info("Asercion exitosa");
+        } catch (Exception e){
+            LOGGER.warn(e.getMessage());
+        }
     }
 }
