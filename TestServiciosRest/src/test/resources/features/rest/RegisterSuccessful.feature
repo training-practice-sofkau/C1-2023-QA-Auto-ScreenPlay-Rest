@@ -1,9 +1,7 @@
 Feature: Register Successful
   AS  reqres user
-  I WANT TO
-  make a resgistration to the system
-  SO THAT
-  I can use the system services
+  I WANT TO make a resgistration to the system
+  SO THAT I can use the system services
 
   @Register
   Scenario Outline: Register Successful

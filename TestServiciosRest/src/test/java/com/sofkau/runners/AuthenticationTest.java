@@ -7,9 +7,9 @@ import org.junit.runner.RunWith;
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
         snippets = CucumberOptions.SnippetType.CAMELCASE,
-        features = {"src/test/resources/features/rest/RegisterSuccessful.feature"},
+        features = {"src/test/resources/features/rest/UserAuthentication.feature"},
         glue = {"com.sofkau.stepdefinitons"},
         tags = {""}
 )
-public class RegisterTest {
+public class AuthenticationTest {
 }

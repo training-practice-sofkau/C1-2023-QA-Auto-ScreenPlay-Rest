@@ -21,11 +21,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 public class RegisterStepDefinition extends ApiSetUp {
     private User user = new User();
 
-    String bodyPrueba = "{\n" +
-            "    \"email\": \"eve.holt@reqres.in\",\n" +
-            "    \"password\": \"pistol\"\n" +
-            "}";
-
     @Given("the user is in the register page")
     public void theUserIsInTheRegisterPage() {
         setUp(REQRES_BASE_URL.getValue());
