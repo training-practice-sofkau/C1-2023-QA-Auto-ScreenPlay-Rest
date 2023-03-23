@@ -11,7 +11,7 @@ public class ReturnRegisterSuccessfulJsonResponse implements Question<Response> 
         return SerenityRest.lastResponse().as(Response.class);
     }
 
-    public static ReturnRegisterSuccessfulJsonResponse returnRegisterSuccessfulJsonResponse(){
+    public static ReturnRegisterSuccessfulJsonResponse returnRegisterSuccessfulJsonResponse() {
         return new ReturnRegisterSuccessfulJsonResponse();
     }
 }
