@@ -11,8 +11,8 @@ import org.apache.http.HttpStatus;
 
 import static com.sofkau.questions.ReturnRegisterSuccessfulJsonResponse.returnRegisterSuccessfulJsonResponse;
 import static com.sofkau.tasks.DoPost.doPost;
-import static com.sofkau.utils.ReqresResources.REGISTER_SUCCESSFUL_RESOURCE;
-import static com.sofkau.utils.ReqresResources.REQRES_BASE_URL;
+import static com.sofkau.utils.Constants.REGISTER_SUCCESSFUL_RESOURCE;
+import static com.sofkau.utils.Constants.REQRES_BASE_URL;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -20,11 +20,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class RegisterStepDefinition extends ApiSetUp {
     private User user = new User();
-
-    String bodyPrueba = "{\n" +
-            "    \"email\": \"eve.holt@reqres.in\",\n" +
-            "    \"password\": \"pistol\"\n" +
-            "}";
 
     @Given("the user is in the register page")
     public void theUserIsInTheRegisterPage() {
