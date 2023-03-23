@@ -7,10 +7,10 @@ import org.junit.runner.RunWith;
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
         snippets = CucumberOptions.SnippetType.CAMELCASE,
-        features = {"src/test/resources/features/rest/GetPlaceHolderPublicaciones"},
+        features = {"src/test/resources/features/rest"},
         glue = {"com.sofkau.stepdefinitons"},
-        tags = {""}
-      //src/test/resources/features/rest
+        tags ={"@Consulta"}
+
 )
 public class RegisterTest {
 }
