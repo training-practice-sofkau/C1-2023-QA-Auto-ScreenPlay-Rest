@@ -47,6 +47,7 @@ public class PostIDStepDefinition extends ApiSetUp {
                     doGet()
                             .withTheResource(POSTS_BY_ID_RESOURCE.getValue() + idPost)
             );
+            LOGGER.info("Peticion realizada");
         } catch (Exception e){
             LOGGER.warn(e.getMessage());
         }
