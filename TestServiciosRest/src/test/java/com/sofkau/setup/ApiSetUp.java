@@ -2,7 +2,6 @@ package com.sofkau.setup;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PropertyConfigurator;
 import static com.sofkau.utils.Log4jValues.LOG4J_PROPERTY_PATH;
 
