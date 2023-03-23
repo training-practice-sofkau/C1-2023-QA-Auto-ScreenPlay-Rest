@@ -40,8 +40,7 @@ public class RegisterStepDefinition extends ApiSetUp {
                         .withTheResource(REGISTER_SUCCESSFUL_RESOURCE.getValue())
                         .andTheRequestBody(user)
         );
-        System.out.println(SerenityRest.lastResponse().body().asString());
-
+        //System.out.println(SerenityRest.lastResponse().body().asString());
     }
 
     @Then("the user see a status {int} response code and an id with a token")

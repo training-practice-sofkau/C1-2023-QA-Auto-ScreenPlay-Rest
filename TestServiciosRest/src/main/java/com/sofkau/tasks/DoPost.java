@@ -24,7 +24,7 @@ public class DoPost implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                Post.to(resource)
+                OurPost.to(resource)
                         .with(
                                 requestSpecification -> requestSpecification.relaxedHTTPSValidation()
                                         .contentType(ContentType.JSON)
