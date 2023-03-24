@@ -46,7 +46,7 @@ public class RegisterStepDefinition extends ApiSetUp {
 
     @Then("the user see a status {int} response code and an id with a token")
     public void theUserSeeAStatusResponseCodeAndAnIdWithAToken(Integer statusCode) {
-        ResponseRegistro actualResponseRegistro = returnRegisterSuccessfulJsonResponse().answeredBy(actor);
+        ResponseRegistro actualResponseRegistro = (ResponseRegistro) returnRegisterSuccessfulJsonResponse().answeredBy(actor);
         actor.should(
                 seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
                         response -> response.statusCode(statusCode)),

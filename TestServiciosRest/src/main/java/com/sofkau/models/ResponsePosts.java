@@ -1,6 +1,6 @@
 package com.sofkau.models;
 
-public class ResponsePost {
+public class ResponsePosts {
     private String userId;
     private String title;
     private String body;

@@ -12,8 +12,8 @@ Feature: Buscar personajes
     When cuando el usuario envia solicitud de busqueda  por id <id>
     Then la pagina retornara un estatus con codigo <codigo> y nombre <nombre>
     Examples:
-      | id     | nombre         | codigo |
-      | "1"    | "Rick Sanchez" | 200    |
-      | "4"    | "Rick Sanchez" | 200    |
-      | "4"    | "Rick Sanchez" | 200    |
-      | "1000" | "Rick Sanchez" | 404    |
+      | id    | nombre           | codigo |
+      | "1"   | "Rick Sanchez"   | 200    |
+      | "4"   | "Beth Smith"     | 200    |
+      | "5"   | "Jerry Smith"    | 200    |
+      | "100" | "Bubonic Plague" | 200      |

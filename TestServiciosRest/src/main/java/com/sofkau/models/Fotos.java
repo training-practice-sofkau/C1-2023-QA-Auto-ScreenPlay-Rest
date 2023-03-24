@@ -2,14 +2,14 @@ package com.sofkau.models;
 
 public class Fotos {
     private String albumId;
-    private String titulo;
+    private String title;
 
     public Fotos() {
     }
 
-    public Fotos(String albumId, String titulo) {
+    public Fotos(String albumId, String title) {
         this.albumId = albumId;
-        this.titulo = titulo;
+        this.title = title;
     }
 
     public String getAlbumId() {
@@ -20,11 +20,11 @@ public class Fotos {
         this.albumId = albumId;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
