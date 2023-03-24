@@ -7,18 +7,20 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 
 import static com.sofkau.tasks.DoGet.doGet;
-import static com.sofkau.utils.SWAPIResources.DARTH_VADER__RESOURSE;
+import static com.sofkau.utils.SWAPIResources.DARTH_VADER_RESOURSE;
 import static com.sofkau.utils.SWAPIResources.SWAPI_BASE_URL;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PeopleStarWarsStepDefinition extends ApiSetUp {
+    public static Logger LOGGER=Logger.getLogger(PeopleStarWarsStepDefinition.class);
     @Given("that the user has the ID of a Star Wars character")
     public void thatTheUserHasTheIDOfAStarWarsCharacter() {
         setUp(SWAPI_BASE_URL.getValue());
@@ -28,9 +30,9 @@ public class PeopleStarWarsStepDefinition extends ApiSetUp {
     public void whenTheUserMakesARequestWithTheCharacterId() {
         actor.attemptsTo(
                 doGet()
-                        .withTheResource(DARTH_VADER__RESOURSE.getValue())
+                        .withTheResource(DARTH_VADER_RESOURSE.getValue())
         );
-        System.out.println(SerenityRest.lastResponse().body().asString());
+        LOGGER.info(SerenityRest.lastResponse().body().asString());
     }
 
     @Then("the user should see a response containing the character's information")

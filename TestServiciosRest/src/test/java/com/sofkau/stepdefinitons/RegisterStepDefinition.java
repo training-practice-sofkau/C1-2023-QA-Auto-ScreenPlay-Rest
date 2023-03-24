@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
+import org.apache.log4j.Logger;
 
 import static com.sofkau.questions.ReturnRegisterSuccessfulJsonResponse.returnRegisterSuccessfulJsonResponse;
 import static com.sofkau.tasks.DoPost.doPost;
@@ -19,6 +20,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 
 public class RegisterStepDefinition extends ApiSetUp {
+    public static Logger LOGGER=Logger.getLogger(RegisterStepDefinition.class);
     private User user = new User();
 
     @Given("the user is in the register page")
@@ -35,7 +37,7 @@ public class RegisterStepDefinition extends ApiSetUp {
                         .withTheResource(REGISTER_SUCCESSFUL_RESOURCE.getValue())
                         .andTheRequestBody(user)
         );
-        System.out.println(SerenityRest.lastResponse().body().asString());
+        LOGGER.info(SerenityRest.lastResponse().body().asString());
 
     }
 

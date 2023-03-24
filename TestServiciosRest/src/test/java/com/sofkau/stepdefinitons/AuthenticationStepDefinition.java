@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -21,6 +22,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AuthenticationStepDefinition extends ApiSetUp {
+    public static Logger LOGGER=Logger.getLogger(AuthenticationStepDefinition.class);
     private Admi admi = new Admi();
     @Given("the admin is on the authentication page")
     public void theAdminIsOnTheAuthenticationPage() {
@@ -36,7 +38,7 @@ public class AuthenticationStepDefinition extends ApiSetUp {
                         .withTheResource(AUTHENTICATION_SUCCESSFUL_RESOURSE.getValue())
                         .andTheRequestBody(admi)
         );
-        System.out.println(SerenityRest.lastResponse().body().asString());
+        LOGGER.info(SerenityRest.lastResponse().body().asString());
     }
 
     @Then("the administrator should see a status response code {int} and a token")

@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
+import org.apache.log4j.Logger;
 
 import static com.sofkau.tasks.DoDelete.doDelete;
 import static com.sofkau.utils.JsonPlaceholderResources.DELETE_FIRST_POST_RESOURCE;
@@ -13,6 +14,7 @@ import static com.sofkau.utils.JsonPlaceholderResources.JSON_PLACEHOLDER_BASE_UR
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
 
 public class DeletePostStepDefinition extends ApiSetUp {
+    public static Logger LOGGER=Logger.getLogger(DeletePostStepDefinition.class);
     @Given("that the user is logged into the application")
     public void thatTheUserIsLoggedIntoTheApplication() {
         setUp(JSON_PLACEHOLDER_BASE_URL.getValue());
@@ -24,7 +26,7 @@ public class DeletePostStepDefinition extends ApiSetUp {
                 doDelete()
                         .withTheResource(DELETE_FIRST_POST_RESOURCE.getValue())
         );
-        System.out.println(SerenityRest.lastResponse().body().asString());
+        LOGGER.info(SerenityRest.lastResponse().body().asString());
     }
 
     @Then("the user should see a status response code {int}")
