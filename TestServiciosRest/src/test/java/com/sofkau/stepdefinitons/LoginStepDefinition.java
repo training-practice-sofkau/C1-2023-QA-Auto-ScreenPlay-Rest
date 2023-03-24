@@ -9,6 +9,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
+import org.apache.log4j.Logger;
 
 import static com.sofkau.questions.ReturnLoginSuccesfulJsonResponse.returnLoginSuccesfulJsonResponse;
 import static com.sofkau.tasks.DoPost.doPost;
@@ -21,6 +22,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 public class LoginStepDefinition extends ApiSetUp {
 
     private User user_login = new User();
+    public static Logger LOGGER = Logger.getLogger(ListPokemonStepDefinition.class);
 
     @Given("the user is in the login page")
     public void theUserIsInTheLoginPage() {

@@ -9,14 +9,12 @@ import org.apache.http.HttpStatus;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Assertions;
 
 
 import static com.sofkau.questions.ReturnListPokemonResponse.returnListPokemonResponse;
 import static com.sofkau.tasks.DoGet.doGet;
 import org.apache.log4j.Logger;
-import static com.sofkau.tasks.DoPost.doPost;
 import static com.sofkau.utils.ReqresResources.*;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
