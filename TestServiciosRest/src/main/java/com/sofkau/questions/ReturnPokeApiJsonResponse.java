@@ -1,20 +1,17 @@
 package com.sofkau.questions;
 
-import com.sofkau.models.ResponseCreate;
-import com.sofkau.models.ResponsePokeApi;
-import io.cucumber.java.en_old.Ac;
 import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
+import io.restassured.response.Response;
 
 
-
-public class ReturnPokeApiJsonResponse implements Question<ResponsePokeApi> {
+public class ReturnPokeApiJsonResponse implements Question<Response> {
 
 
     @Override
-    public ResponsePokeApi answeredBy(Actor actor) {
-        return SerenityRest.lastResponse().as(ResponsePokeApi.class);
+    public Response answeredBy(Actor actor) {
+        return (Response) SerenityRest.lastResponse().body();
     }
 
     public static ReturnPokeApiJsonResponse returnPokeApiJsonResponse(){

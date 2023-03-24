@@ -12,4 +12,4 @@ Feature: Ver informacion de un usuario
       | id       | code |
       | "1"      | 200  |
       | "2"      | 200  |
-      | "3"      | 200  |
+      | "5"      | 200  |

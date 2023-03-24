@@ -10,6 +10,10 @@ import io.cucumber.java.en.When;
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Assertions;
+import static org.hamcrest.CoreMatchers.equalTo;
+
+import java.util.logging.Logger;
 
 import static com.sofkau.questions.ReturnCreateJsonResponse.returnCreateJsonResponse;
 import static com.sofkau.questions.ReturnRegisterSuccessfulJsonResponse.returnRegisterSuccessfulJsonResponse;
@@ -19,7 +23,7 @@ import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeT
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class CreateUserStepDefinition extends ApiSetUp {
-
+    public static Logger LOGGER = Logger.getLogger(String.valueOf(VerUsuarioStepDefinition.class));
     private Usuario usuario=new Usuario();
     private String BASE_URL="https://reqres.in/";
     private String CREAR_USUARIO="api/users";
@@ -27,28 +31,40 @@ public class CreateUserStepDefinition extends ApiSetUp {
     @Given("que estoy apuntando con un endpoint a la api")
     public void queEstoyApuntandoConUnEndpointALaApi() {
         setUp(BASE_URL);
+        LOGGER.info("Se inicia la automatizacion del step de crear usuario");
     }
 
     @When("envio la peticion get con el {string} y la {string}")
     public void envioLaPeticionGetConElYLa(String nombre, String trabajo) {
-        usuario.setName(nombre);
-        usuario.setJob(trabajo);
-        actor.attemptsTo(
-                doPost()
-                        .withTheResource(CREAR_USUARIO)
-                        .andTheRequestBody(usuario)
-        );
-        System.out.println(SerenityRest.lastResponse().body().asString());
+        try{
+            usuario.setName(nombre);
+            usuario.setJob(trabajo);
+            actor.attemptsTo(
+                    doPost()
+                            .withTheResource(CREAR_USUARIO)
+                            .andTheRequestBody(usuario)
+            );
+        }catch (Exception e){
+            LOGGER.warning(e.getMessage());
+        }
     }
 
     @Then("recibo {int} de codigo de respuesta y el id con la fecha de creacion")
     public void reciboDeCodigoDeRespuestaYElIdConLaFechaDeCreacion(Integer codigo) {
-        ResponseCreate actualResponseCreate=returnCreateJsonResponse().answeredBy(actor);
-        actor.should(
-                seeThatResponse("El codigo de respuesta es: "+ HttpStatus.SC_OK,
-                        responseCreate-> responseCreate.statusCode(codigo)),
-                seeThat("Retorna informacion",
-                        act-> actualResponseCreate, notNullValue())
-        );
+        try{
+            ResponseCreate actualResponseCreate=returnCreateJsonResponse().answeredBy(actor);
+            actor.should(
+                    seeThatResponse("El codigo de respuesta es: "+ HttpStatus.SC_OK,
+                            responseCreate-> responseCreate.statusCode(codigo)),
+                    seeThat("Retorna informacion",
+                            act-> actualResponseCreate, notNullValue()),
+                    seeThat("Se recibio el nombre de usuario creado: ",
+                            nombre -> usuario.getName(), equalTo(actualResponseCreate.getName()))
+            );
+            LOGGER.info("Se finaliza el step de crear usuario");
+        }catch (Exception e){
+            LOGGER.warning(e.getMessage());
+            Assertions.fail();
+        }
     }
 }
