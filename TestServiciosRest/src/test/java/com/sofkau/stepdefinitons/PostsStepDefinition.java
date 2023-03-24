@@ -56,9 +56,9 @@ public class PostsStepDefinition extends ApiPlaceholderSetup {
                     seeThat("Comparar id",
                             idC -> responseBody.get("userId").toString(), equalTo(userId)),
                     seeThat("Comparar id",
-                            idC -> responseBody.get("title").toString(), equalTo(title)),
+                            TiC -> responseBody.get("title").toString(), equalTo(title)),
                     seeThat("Comparar id",
-                            idC -> responseBody.get("body").toString(), equalTo(body))
+                            BodyC -> responseBody.get("body").toString(), equalTo(body))
             );
             LOGGER.info("Datos esperados y actuales correctos");
         } catch (Exception e){

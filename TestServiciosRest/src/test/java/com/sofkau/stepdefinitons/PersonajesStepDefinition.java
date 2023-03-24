@@ -53,7 +53,7 @@ public class PersonajesStepDefinition extends ApiRickAndMortySetup {
                     seeThat("Retorna información",
                             act -> actualResponse, CoreMatchers.notNullValue()),
                     seeThat("Comparar id",
-                            idC -> responseBody.get("name").toString(), equalTo(name))
+                            iName -> responseBody.get("name").toString(), equalTo(name))
             );
             LOGGER.info("Datos esperados y actuales correctos");
         } catch (Exception e){

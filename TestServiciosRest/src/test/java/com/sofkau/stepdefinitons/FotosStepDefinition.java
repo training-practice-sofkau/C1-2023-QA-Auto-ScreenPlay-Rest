@@ -52,11 +52,11 @@ public class FotosStepDefinition extends ApiPlaceholderSetup {
                     seeThat("Retorna información",
                             act -> actualResponse, notNullValue()),
                     seeThat("Comparar id",
-                            idC -> responseBody.get("albumId").toString(), equalTo(albumId)),
+                            iAl -> responseBody.get("albumId").toString(), equalTo(albumId)),
                     seeThat("Comparar id",
-                            idC -> responseBody.get("title").toString(), equalTo(title))
+                            iTI -> responseBody.get("title").toString(), equalTo(title))
             );
-            LOGGER.info("Asercion exitosa");
+            LOGGER.info("Asserción realiada con exito");
         } catch (Exception e){
             LOGGER.warn(e.getMessage());
         }
