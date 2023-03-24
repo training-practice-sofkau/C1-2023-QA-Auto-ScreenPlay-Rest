@@ -21,9 +21,9 @@ public class PokemonStepDefinitions {
     private static final String restApiUrl = "https://pokeapi.co/api";
     Actor actor;
 
-    @Given("que el usuario necesita consultar que pokemones que estan registrados, se hace la peticion")
-    public void queElUsuarioNecesitaConsultarQuePokemonesQueEstanRegistradosSeHaceLaPeticion() {
-        actor = Actor.named("Yeison")
+    @Given("que el usuario necesita consultar que pokemons que estan registrados, se hace la peticion")
+    public void queElUsuarioNecesitaConsultarQuepokemonsQueEstanRegistradosSeHaceLaPeticion() {
+        actor = Actor.named("James")
                 .whoCan(CallAnApi.at(restApiUrl));
         actor.attemptsTo(
                 DoGetPokemon.fromPage("/pokemon")
@@ -39,29 +39,29 @@ public class PokemonStepDefinitions {
 
     @Then("se validara que en los datos de retorno se encuentre el pokemon")
     public void SeValidaraQueEnLosDatosDeRetornoSeEncuentreElPokemon(String pokemon) {
-        Result pokemones = new GetPokemons().answeredBy(actor).getResults().stream()
+        Result pokemons = new GetPokemons().answeredBy(actor).getResults().stream()
                 .filter(x -> x.getName().equals(pokemon)).findFirst().orElse(null);
 
         actor.should(
-                seeThat("La respuesta ", act -> pokemones, notNullValue())
+                seeThat("La respuesta ", act -> pokemons, notNullValue())
         );
 
         actor.should(
-                seeThat("Nombre del pokemon", act -> pokemones.getName(), equalTo(pokemon))
+                seeThat("Nombre del pokemon", act -> pokemons.getName(), equalTo(pokemon))
         );
     }
 
     @Then("se validara que en los datos de retorno se encuentre el pokemon {string}")
     public void seValidaraQueEnLosDatosDeRetornoSeEncuentreElPokemon(String pokemon) {
-        Result pokemones = new GetPokemons().answeredBy(actor).getResults().stream()
+        Result pokemons = new GetPokemons().answeredBy(actor).getResults().stream()
                 .filter(x -> x.getName().equals(pokemon)).findFirst().orElse(null);
 
         actor.should(
-                seeThat("La respuesta ", act -> pokemones, notNullValue())
+                seeThat("La respuesta ", act -> pokemons, notNullValue())
         );
 
         actor.should(
-                seeThat("Nombre del pokemon", act -> pokemones.getName(), equalTo(pokemon))
+                seeThat("Nombre del pokemon", act -> pokemons.getName(), equalTo(pokemon))
         );
     }
 
