@@ -6,7 +6,7 @@ import static net.serenitybdd.screenplay.Tasks.instrumented;
 import static net.serenitybdd.screenplay.rest.abilities.CallAnApi.as;
 
 public class OurPatch extends RestInteraction {
-    private final String resource;
+    private final String  resource;
     public  OurPatch(String resource){
         this.resource=resource;
     }
