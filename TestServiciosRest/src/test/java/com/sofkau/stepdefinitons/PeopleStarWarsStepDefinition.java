@@ -51,6 +51,8 @@ public class PeopleStarWarsStepDefinition extends ApiSetUp {
         }
         String name = (String) jsonObject.get("name");
         assertEquals("Darth Vader", name);
+        String gender = (String) jsonObject.get("gender");
+        assertEquals("male", gender);
 
     }
 }

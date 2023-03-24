@@ -11,5 +11,5 @@ import org.junit.runner.RunWith;
         glue = {"com.sofkau.stepdefinitons"},
         tags = {""}
 )
-public class PeopeStarWarsTest {
+public class PeopleStarWarsTest {
 }
