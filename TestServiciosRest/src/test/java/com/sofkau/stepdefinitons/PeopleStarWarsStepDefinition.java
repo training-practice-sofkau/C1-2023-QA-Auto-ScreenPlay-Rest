@@ -26,17 +26,17 @@ public class PeopleStarWarsStepDefinition extends ApiSetUp {
         setUp(SWAPI_BASE_URL.getValue());
     }
 
-    @When("when the user makes a request with the character id")
-    public void whenTheUserMakesARequestWithTheCharacterId() {
+    @When("the user makes a request with the character id {int}")
+    public void theUserMakesARequestWithTheCharacterId(Integer id) {
         actor.attemptsTo(
                 doGet()
-                        .withTheResource(DARTH_VADER_RESOURSE.getValue())
+                        .withTheResource(DARTH_VADER_RESOURSE.getValue() + id)
         );
         LOGGER.info(SerenityRest.lastResponse().body().asString());
     }
 
-    @Then("the user should see a response containing the character's information")
-    public void theUserShouldSeeAResponseContainingTheCharacterSInformation() {
+    @Then("the user should see a response containing the character's name {string} and gender {string}")
+    public void theUserShouldSeeAResponseContainingTheCharacterSNameAndGender(String nombre, String genero) {
 
         actor.should(
                 seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
@@ -52,9 +52,9 @@ public class PeopleStarWarsStepDefinition extends ApiSetUp {
             e.printStackTrace();
         }
         String name = (String) jsonObject.get("name");
-        assertEquals("Darth Vader", name);
+        assertEquals(nombre, name);
         String gender = (String) jsonObject.get("gender");
-        assertEquals("male", gender);
+        assertEquals(genero, gender);
 
     }
 }
