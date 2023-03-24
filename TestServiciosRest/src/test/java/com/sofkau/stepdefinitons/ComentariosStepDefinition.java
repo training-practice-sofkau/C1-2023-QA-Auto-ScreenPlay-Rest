@@ -47,7 +47,6 @@ public class ComentariosStepDefinition extends ApiSetUp {
                     doGet()
                             .withTheResource(COMMENTS_BY_POST.getValue() + idPost)
             );
-            //System.out.println(SerenityRest.lastResponse().body().asString());
             LOGGER.info("Peticion realizada");
         } catch (Exception e){
             LOGGER.warn(e.getMessage());
