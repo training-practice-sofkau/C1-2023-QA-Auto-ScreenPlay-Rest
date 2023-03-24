@@ -14,3 +14,4 @@ Feature:Obtener personaje por id
       | 200    | 3  |
       | 200    | 4  |
       | 200    | 5  |
+      | 400    | 50 |
