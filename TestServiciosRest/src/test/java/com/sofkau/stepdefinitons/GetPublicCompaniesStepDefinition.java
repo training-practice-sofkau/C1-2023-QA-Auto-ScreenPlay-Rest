@@ -6,6 +6,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
+import net.serenitybdd.rest.SerenityRest;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -36,6 +37,7 @@ public class GetPublicCompaniesStepDefinition extends ApiSetUp {
         actor.attemptsTo(
                 doGet().withTheResource(GET_PUBLIC_COMPANIES_RESOURCE.getValue())
         );
+        LOGGER.info(SerenityRest.lastResponse().body().asString());
     }
 
     @Then("the user gets a status code response Ok and sees the information about public companies investing in Bitcoin and Ethereum")

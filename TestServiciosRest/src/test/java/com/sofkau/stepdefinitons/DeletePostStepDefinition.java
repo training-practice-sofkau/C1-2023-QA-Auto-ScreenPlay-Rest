@@ -4,6 +4,7 @@ import com.sofkau.setup.ApiSetUp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import net.serenitybdd.rest.SerenityRest;
 import org.apache.log4j.Logger;
 
 import static com.sofkau.utils.JsonPlaceHolderResources.JSON_PLACE_HOLDER_BASE_URL;
@@ -28,6 +29,7 @@ public class DeletePostStepDefinition extends ApiSetUp {
         actor.attemptsTo(
                 doDelete().withTheResource(DELETE_RESOURCE.getValue())
         );
+
     }
 
     @Then("the user gets a status code response Ok")
