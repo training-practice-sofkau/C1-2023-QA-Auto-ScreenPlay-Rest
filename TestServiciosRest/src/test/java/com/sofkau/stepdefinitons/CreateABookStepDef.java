@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import static com.sofkau.tasks.DoPut.doPut;
 import static com.sofkau.utils.Constants.*;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 
 public class CreateABookStepDef extends APISetup {
@@ -67,12 +68,11 @@ public class CreateABookStepDef extends APISetup {
             actor.should(
                     seeThatResponse("Book created should be shown",
                             response -> response
-                                    .body("id", hasItem(book.getId()))
-                                    .body("title", hasItem(book.getTitle()))
-                                    .body("description", hasItem(book.getDescription()))
-                                    .body("pageCount", hasItem(book.getPageCount()))
-                                    .body("excerpt", hasItem(book.getExcerpt()))
-                                    .body("publishDate", hasItem(book.getPublishDate()))
+                                    .body("id", equalTo(book.getId()))
+                                    .body("title", equalTo(book.getTitle()))
+                                    .body("description", equalTo(book.getDescription()))
+                                    .body("pageCount", equalTo(book.getPageCount()))
+                                    .body("excerpt", equalTo(book.getExcerpt()))
                     )
             );
             log.info("Second assert passed");

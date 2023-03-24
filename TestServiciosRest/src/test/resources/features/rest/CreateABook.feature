@@ -1,5 +1,5 @@
 Feature: Create a Book
-  As: An User of Faker REST API
+  As: An User of Fake REST API
   I want: To create a new book
   So that
 
