@@ -38,7 +38,12 @@ public class MostrarAlbumStepDefinition extends ApiSetUp {
 
     @Then("the user see a response with property {string}")
     public void theUserSeeAResponseWithProperty(String title) {
-        Album actualResponse= returnLisAlbumJsonResponse().answeredBy(actor);
-        Assertions.assertEquals(title, actualResponse.getTitle());
+        try{
+            Album actualResponse= returnLisAlbumJsonResponse().answeredBy(actor);
+            Assertions.assertEquals(title, actualResponse.getTitle());
+        }catch (AssertionError error){
+            LOGGER.warn(error.getMessage());
+            Assertions.fail("Respuesta de la petición - inválida");
+        }
     }
 }
