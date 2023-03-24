@@ -1,6 +1,6 @@
 package com.sofkau.models;
 
-public class User {
+public class UserRegister {
     private String email;
     private String password;
 
