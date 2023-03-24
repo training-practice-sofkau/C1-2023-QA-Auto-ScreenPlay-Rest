@@ -5,7 +5,7 @@ Feature: Realizar put en un post
 
   @PutPosts
   Scenario Outline: Actualizar post por id
-    Given El usuario se encuentra en la web de JsonPlaceHolder
+    Given El usuario se encuentra en la web de JsonPlaceHolder para actualizar los post
     When El usuario envia una solicitud con el <id> del post deseado para actualizar el <title> el <userid> y el <body>
     Then El usuario debe recibir un respuesta de status <code> y el post solicitado con su actualizacion
     Examples:

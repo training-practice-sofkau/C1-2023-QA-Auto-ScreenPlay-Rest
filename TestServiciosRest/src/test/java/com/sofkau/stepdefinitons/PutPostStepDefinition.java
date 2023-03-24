@@ -3,6 +3,7 @@ package com.sofkau.stepdefinitons;
 
 import com.sofkau.models.Posts;
 import com.sofkau.setup.ApiSetUp;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.log4j.Logger;
@@ -10,6 +11,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import static com.sofkau.tasks.DoPut.doPut;
+import static com.sofkau.utils.JsonPlaceHolderResources.JSONPLACE_BASE_URL;
 import static com.sofkau.utils.JsonPlaceHolderResources.POSTS_BY_ID_RESOURCE;
 
 
@@ -19,6 +21,16 @@ public class PutPostStepDefinition extends ApiSetUp {
     JSONObject responseBody = null;
     JSONParser parser = new JSONParser();
     Posts posts = new Posts();
+
+    @Given("El usuario se encuentra en la web de JsonPlaceHolder para actualizar los post")
+    public void elUsuarioSeEncuentraEnLaWebDeJsonPlaceHolderParaActualizarLosPost() {
+        try {
+            setUp(JSONPLACE_BASE_URL.getValue());
+            LOGGER.info("Empezando peticion");
+        }catch (Exception e){
+            LOGGER.warn(e.getMessage());
+        }
+    }
 
     @When("El usuario envia una solicitud con el {string} del post deseado para actualizar el {string} el {int} y el {string}")
     public void elUsuarioEnviaUnaSolicitudConElDelPostDeseadoParaActualizarElElYEl(String id,
