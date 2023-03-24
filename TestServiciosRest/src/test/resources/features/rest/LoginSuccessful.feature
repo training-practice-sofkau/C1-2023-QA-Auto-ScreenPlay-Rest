@@ -13,5 +13,5 @@ Feature: Login Successful
     Examples:
       | email                        | password     |
       | "eve.holt@reqres.in"         | "cityslicka" |
-      | "eve.holt@reqres.in"        | "3658"       |
+      | "eve.holt@gmail.com"         | "3658"       |
       | "lindsay.ferguson@reqres.in" | "1234"       |
