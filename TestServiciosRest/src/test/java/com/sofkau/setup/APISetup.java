@@ -5,7 +5,7 @@ import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
 
 import static com.sofkau.utils.Constants.ACTOR;
 
-public class ApiSetUp {
+public class APISetup {
     protected Actor actor = new Actor(ACTOR.getValue());
 
     protected void setUp(String urlBase) {

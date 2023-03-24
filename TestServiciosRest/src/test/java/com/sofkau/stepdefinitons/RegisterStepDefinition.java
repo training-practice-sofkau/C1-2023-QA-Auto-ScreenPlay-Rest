@@ -2,7 +2,7 @@ package com.sofkau.stepdefinitons;
 
 import com.sofkau.models.Response;
 import com.sofkau.models.User;
-import com.sofkau.setup.ApiSetUp;
+import com.sofkau.setup.APISetup;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -18,8 +18,8 @@ import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeT
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 
-public class RegisterStepDefinition extends ApiSetUp {
-    private User user = new User();
+public class RegisterStepDefinition extends APISetup {
+    private final User user = new User();
 
     @Given("the user is in the register page")
     public void theUserIsInTheRegisterPage() {

@@ -3,7 +3,7 @@ Feature: Delete an Album
   I want: To delete a particular album
   So that
 
-  @DeletePost
+  @DeleteAlbum
   Scenario Outline: Delete several albums
     Given I have access to JSONPlaceholder API server
     When I try to delete an album with id <id>

@@ -3,7 +3,7 @@ Feature: Create a Book
   I want: To create a new book
   So that
 
-  @DeletePost
+  @CreateBook
   Scenario Outline: Create a new book
     Given I have access to Fake REST API server
     When I try to create a book with id <id>, title '<title>' and page count <pageCount>
