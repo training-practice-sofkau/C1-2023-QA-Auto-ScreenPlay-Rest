@@ -2,7 +2,6 @@ package com.sofkau.stepdefinitons;
 
 import com.sofkau.models.GetModelRickAndMorty;
 import com.sofkau.models.PostModel;
-//import com.sofkau.models.Response;
 import com.sofkau.setup.ApiSetUp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -13,7 +12,6 @@ import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
 import org.apache.http.ParseException;
 import org.json.simple.JSONObject;
-
 import static com.sofkau.questions.ReturnGetRetResponseRickAndMorty.returnGetResponse;
 import static com.sofkau.questions.ReturnPostResponse.returnPostResponse;
 import static com.sofkau.questions.ReturnRegisterSuccessfulJsonResponse.returnRegisterSuccessfulJsonResponse;
@@ -47,18 +45,17 @@ public class RickAndMortyStepDefinition extends ApiSetUp {
     public void se_deberia_observar_el_estatus_y_un_body_de_respuesta_con_la_informacion_del_personaje(Integer statusCode) throws ParseException {
         try {
          //  GetModelRickAndMorty  respuestaActual = (GetModelRickAndMorty) returnGetResponse().answeredBy(actor);
-           Response Cualquiercosa = (Response) returnGetResponse().answeredBy(actor);
+           Response respuesta = (Response) returnGetResponse().answeredBy(actor);
 
               actor.should(
                     seeThatResponse("El codigo de respuesta deberia ser: " + statusCode,
                             response -> response.statusCode(statusCode)),
                     seeThat("Retorna informacion",
-                            act -> Cualquiercosa, notNullValue())
+                            act -> respuesta, notNullValue())
             );
 
            // LOGGER.info("Ingreso exitosamente de la informacion del personaje");
         } catch (Exception e){
-           //LOGGER.warn(e.getMessage());
         }
     }
 }
