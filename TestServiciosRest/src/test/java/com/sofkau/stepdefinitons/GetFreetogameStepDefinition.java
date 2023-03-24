@@ -54,7 +54,7 @@ public class GetFreetogameStepDefinition extends ApiSetUp {
                         response -> response.statusCode(code)),
 
                 seeThat("Retorna información",
-                        act -> actualResponse, CoreMatchers.notNullValue())
+                        act -> actualResponse, notNullValue())
         );
     }
 
