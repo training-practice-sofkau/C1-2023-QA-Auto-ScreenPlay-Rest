@@ -5,7 +5,7 @@ Feature: Post Successful
 
   @Post
   Scenario Outline: Post Successful
-    Given the user is in the JSON place holder page
+    Given the user is in the JSON place holder post page
     When the user sends the <title>, <body> and <userId> of the post he wants to post
     Then the user sees a status <code> and the post he wants to post <title>
     Examples:
