@@ -7,6 +7,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.rest.SerenityRest;
+import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,9 +19,12 @@ import static com.sofkau.tasks.DoPostProducts.doPostProducts;
 import static com.sofkau.tasks.DoPutProducts.doPutProducts;
 import static com.sofkau.utils.ProductResources.PRODUCT_RESOURCES_BASE_URL;
 import static com.sofkau.utils.ProductResources.PRODUCT_SUCCESSFUL_RESOURCES;
+import static com.sofkau.utils.PutProductResources.PUS_PRODUCT_RESOURCES_BASE_URL;
+import static com.sofkau.utils.PutProductResources.PUT_PRODUCT_SUCCESSFUL_RESOURCES;
 import static net.serenitybdd.rest.SerenityRest.lastResponse;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 public class PutProductsStepDefinition extends ApiSetUp {
@@ -28,17 +32,19 @@ public class PutProductsStepDefinition extends ApiSetUp {
     private Product producto = new Product();
     JSONParser parser = new JSONParser();
     JSONObject responseBody = null;
+
+
     private Response response;
     public static Logger LOGGER = Logger.getLogger(GetFreetogameStepDefinition.class);
 
     @Given("el administrador esta en la pagina FakerProducts seccion actualizar")
     public void elUsuarioEstaEnLaPaginaFakerProducts() {
-        setUp(PRODUCT_RESOURCES_BASE_URL.getValue());
+        setUp(PUS_PRODUCT_RESOURCES_BASE_URL.getValue());
     }
 
 
-    @When("el administrador envia la informacion  {string}, {double}, {string}, {string}, {string}")
-    public void cuandoElUsuarioEnviaLaInformacion(String title, Double precio, String descripcion, String imagen, String categoria) {
+    @When("el administrador envia la informacion {int}  {string}, {double}, {string}, {string}, {string}")
+    public void elAdministradorEnviaLaInformacion(Integer id, String title, Double precio, String descripcion, String imagen, String categoria) {
         producto.setTitle(title);
         producto.setPrice(precio);
         producto.setDescription(descripcion);
@@ -46,7 +52,7 @@ public class PutProductsStepDefinition extends ApiSetUp {
         producto.setCategory(categoria);
         actor.attemptsTo(
                 doPutProducts()
-                        .withTheResource(PRODUCT_SUCCESSFUL_RESOURCES.getValue())
+                        .withTheResource(PUT_PRODUCT_SUCCESSFUL_RESOURCES.getValue() + id)
                         .andTheRequestBody(producto)
         );
         System.out.println(SerenityRest.lastResponse().body().asString());
@@ -60,16 +66,15 @@ public class PutProductsStepDefinition extends ApiSetUp {
 
             actor.should(
                     // Validar el código de estado HTTP con Serenity BDD
-                    seeThatResponse("El codigo de respuesta es: " + code,
+                    seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
                             response -> response.statusCode(code)),
                     // Validar que la respuesta tenga información con Serenity BDD
                     seeThat("Retorna información",
                             act -> actualResponse.getTitle(), notNullValue())
             );
             responseBody = (JSONObject) parser.parse(lastResponse().asString());
-            LOGGER.info(" esta es la respuesta ---> " + actualResponse.getTitle() + actualResponse.getCategory());
 
-            // Validar las propiedades "title" y "category" con JUnit
+            // Validar las propiedades "title" y "category"
             String title = (String) responseBody.get("title");
             String category = (String) responseBody.get("category");
             Assertions.assertEquals(title, actualResponse.getTitle());

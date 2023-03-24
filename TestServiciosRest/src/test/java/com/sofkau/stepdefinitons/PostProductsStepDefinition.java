@@ -8,6 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.rest.SerenityRest;
+import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -67,7 +68,7 @@ public class PostProductsStepDefinition extends ApiSetUp {
 
             actor.should(
                     // Validar el código de estado HTTP con Serenity BDD
-                    seeThatResponse("El codigo de respuesta es: " + code,
+                    seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
                             response -> response.statusCode(code)),
                     // Validar que la respuesta tenga información con Serenity BDD
                     seeThat("Retorna información",

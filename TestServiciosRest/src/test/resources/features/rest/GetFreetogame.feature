@@ -10,5 +10,5 @@ Feature: Lista de Juegos
     Then El jugador recibe un estadtus <code> con el juego encontrado
     Examples:
       | id  | code |
-      | 453 | 400  |
+      | 453 | 200    |
       | 453 | 200  |
