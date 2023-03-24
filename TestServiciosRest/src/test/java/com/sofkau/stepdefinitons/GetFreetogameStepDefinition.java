@@ -1,21 +1,19 @@
 package com.sofkau.stepdefinitons;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sofkau.models.Product;
+import com.sofkau.models.ResponseGame;
 import com.sofkau.models.Response;
 import com.sofkau.setup.ApiSetUp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.rest.SerenityRest;
+import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
+import org.hamcrest.CoreMatchers;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.junit.jupiter.api.Assertions;
 
-import java.util.Map;
-
-import static com.sofkau.questions.ReturnQuestionProduct.returnQuestionProduct;
+import static com.sofkau.questions.ReturnQuestionGames.returnQuestionGames;
 import static com.sofkau.tasks.DoGetGame.doGetGame;
 import static com.sofkau.utils.FreetoGameResources.*;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
@@ -48,7 +46,16 @@ public class GetFreetogameStepDefinition extends ApiSetUp {
 
     @Then("El jugador recibe un estadtus {int} con el juego encontrado")
     public void elJugadorRecibeUnEstadtusConElJuegoEncontrado(Integer code) {
+        ResponseGame actualResponse = returnQuestionGames().answeredBy(actor);
+        LOGGER.info("respuesta de la api-->" + actualResponse);
 
+        actor.should(
+                seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
+                        response -> response.statusCode(code)),
+
+                seeThat("Retorna información",
+                        act -> actualResponse, CoreMatchers.notNullValue())
+        );
     }
 
 

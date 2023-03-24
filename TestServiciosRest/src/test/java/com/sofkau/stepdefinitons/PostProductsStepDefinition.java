@@ -76,7 +76,7 @@ public class PostProductsStepDefinition extends ApiSetUp {
             responseBody = (JSONObject) parser.parse(lastResponse().asString());
             LOGGER.info(" esta es la respuesta ---> " + actualResponse.getTitle() + actualResponse.getCategory());
 
-            // Validar las propiedades "title" y "category" con JUnit
+            // Validar las propiedades "title" y "category"
             String title = (String) responseBody.get("title");
             String category = (String) responseBody.get("category");
             Assertions.assertEquals(title, actualResponse.getTitle());
