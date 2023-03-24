@@ -3,6 +3,7 @@ Feature: Retrieve Posts from JSONPlaceholder API
   I want to retrieve a post by its ID
   So that I can view the details of a specific post
 
+  @Get
   Scenario Outline: Retrieve posts from the JSONPlaceholder API
     Given the JSONPlaceholder API is available
     When I make a GET request by <id>
