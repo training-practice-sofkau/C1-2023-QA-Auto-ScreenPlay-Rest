@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
+import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -28,32 +29,53 @@ public class GetPostsStepDefinition extends ApiSetUp {
 
     @Given("the JSONPlaceholder API is available")
     public void theJSONPlaceholderAPIIsAvailable() {
-        setUp(PLACE_HOLDER_BASE_URL.getValue());
+        try {
+            setUp(PLACE_HOLDER_BASE_URL.getValue());
+            LOGGER.info("Se inicio la automatizacion en la URL: " + PLACE_HOLDER_BASE_URL.getValue());
+        } catch (Exception e) {
+            LOGGER.error("Error al iniciar la automatizacion : Detalles: "+ e.getMessage());
+            actor.should(
+                    seeThatResponse("El servidor no está disponible",
+                            response -> response.statusCode(HttpStatus.SC_OK))
+            );
+        }
 
     }
 
     @When("I make a GET request by {string}")
     public void iMakeAGETRequestBy(String id) {
 
-        actor.attemptsTo(
-                doGet().withTheResource(GET_POSTS.getValue() + id)
-        );
+        try {
+            LOGGER.info("Realizando peticion GET...");
 
-        System.out.println(SerenityRest.lastResponse().body().asString());
+            actor.attemptsTo(
+                    doGet().withTheResource(GET_POSTS.getValue() + id)
+            );
+
+            System.out.println(SerenityRest.lastResponse().body().asString());
+        } catch (Exception e) {
+            LOGGER.error("Error durante GET request: " + e.getMessage());
+        }
     }
 
     @Then("the response status code should be {int}")
     public void theResponseStatusCodeShouldBe(Integer code) throws ParseException {
 
-        Response actualResponse = returnGetResponse().answeredBy(actor);
+        try {
+            Response actualResponse = returnGetResponse().answeredBy(actor);
 
-        actor.should(
-                seeThatResponse("the response code should be " + code,
-                        response -> response.statusCode(code)),
-                seeThat("Retorna información",
-                        act -> actualResponse, notNullValue())
-        );
-       // LOGGER.info("Response status code: " + code);
+            actor.should(
+                    seeThatResponse("El codigo de respuesta deberia ser: " + code,
+                            response -> response.statusCode(code)),
+                    seeThat("Retorna informacion",
+                            act -> actualResponse, notNullValue())
+            );
+
+            LOGGER.info("Respuesta status code: " + code);
+        } catch (Exception e) {
+            LOGGER.error("Error: ", e);
+            throw e;
+        }
 
     }
 

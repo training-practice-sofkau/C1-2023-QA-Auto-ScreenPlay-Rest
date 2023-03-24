@@ -19,7 +19,7 @@ public class OurGet extends RestInteraction {
     @Step("{0} executes a GET on the resource #resource")
     @Override
     public <T extends Actor> void performAs(T actor) {
-        rest().log().all().get(as(actor).resolve(resource)).then().log().all();
+        rest().get(as(actor).resolve(resource)).then();
     }
 
     public static OurGet to(String resource){
