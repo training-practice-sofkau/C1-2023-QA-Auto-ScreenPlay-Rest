@@ -1,14 +1,14 @@
 package com.sofkau.questions;
 
-import com.sofkau.models.Response;
+import com.sofkau.models.ResponseRegister;
 import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
 
-public class ReturnRegisterSuccessfulJsonResponse implements Question<Response> {
+public class ReturnRegisterSuccessfulJsonResponse implements Question<ResponseRegister> {
     @Override
-    public Response answeredBy(Actor actor) {
-        return SerenityRest.lastResponse().as(Response.class);
+    public ResponseRegister answeredBy(Actor actor) {
+        return SerenityRest.lastResponse().as(ResponseRegister.class);
     }
 
     public static ReturnRegisterSuccessfulJsonResponse returnRegisterSuccessfulJsonResponse(){
