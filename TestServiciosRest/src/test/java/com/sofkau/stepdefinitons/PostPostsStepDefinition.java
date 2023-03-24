@@ -32,9 +32,9 @@ public class PostPostsStepDefinition extends ApiSetUp {
 
         try {
             setUp(PLACE_HOLDER_BASE_URL.getValue());
-            LOGGER.info("Se inició la automatización en la URL: " + PLACE_HOLDER_BASE_URL.getValue());
+            LOGGER.info("Se inicio la automatizacion en la URL: " + PLACE_HOLDER_BASE_URL.getValue());
         } catch (Exception e) {
-            LOGGER.error("Error al iniciar la automatización : Detalles: "+ e.getMessage());
+            LOGGER.error("Error al iniciar la automatizacion : Detalles: "+ e.getMessage());
             actor.should(
                     seeThatResponse("El servidor no está disponible",
                             response -> response.statusCode(HttpStatus.SC_OK))

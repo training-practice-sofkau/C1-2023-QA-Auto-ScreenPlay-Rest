@@ -1,6 +1,5 @@
 package com.sofkau.questions;
 
-import com.sofkau.models.ResponseRegister;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
