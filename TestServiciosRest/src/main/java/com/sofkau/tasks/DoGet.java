@@ -16,10 +16,8 @@ public class DoGet implements Task{
     }
     @Override
     public <T extends Actor> void performAs(T actor) {
-        System.out.println(resource+numero);
-        String url=resource+numero;
         actor.attemptsTo(
-                OurGet.conElRecurso(url)
+                Get.resource(resource+numero)
         );
     }
     public static DoGet doGet(){
