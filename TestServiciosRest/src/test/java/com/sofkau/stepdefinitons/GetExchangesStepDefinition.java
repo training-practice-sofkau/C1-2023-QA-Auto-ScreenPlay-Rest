@@ -5,7 +5,10 @@ import com.sofkau.setup.ApiSetUp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.response.Response;
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import static com.sofkau.utils.CoinGeckoResources.COIN_GECKO_BASE_URL;
 import static com.sofkau.tasks.DoGet.doGet;
@@ -19,6 +22,12 @@ import static org.hamcrest.Matchers.notNullValue;
 public class GetExchangesStepDefinition extends ApiSetUp {
 
     public static Logger LOGGER = Logger.getLogger(GetExchangesStepDefinition.class);
+
+    private Response response;
+
+    JSONParser parser = new JSONParser();
+    JSONObject responseBody = null;
+
     @Given("the user is in the coingecko web page")
     public void theUserIsInTheCoingeckoWebPage() {
         setUp(COIN_GECKO_BASE_URL.getValue());
