@@ -28,6 +28,7 @@ public class RegisterStepDefinition extends ApiSetUp {
 
     @Given("the user is in the register page")
     public void theUserIsInTheRegisterPage() {
+
         setUp(REQRES_BASE_URL.getValue());
     }
 

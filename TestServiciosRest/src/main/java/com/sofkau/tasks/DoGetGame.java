@@ -1,40 +1,44 @@
 package com.sofkau.tasks;
 
-import com.sofkau.interactions.OurPost;
+import com.sofkau.interactions.OurGet;
 import io.restassured.http.ContentType;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
+import net.serenitybdd.screenplay.rest.interactions.Get;
 import net.serenitybdd.screenplay.rest.interactions.Post;
 
-public class DoPost implements Task {
+import static com.sofkau.utils.ProductResources.PRODUCT_SUCCESSFUL_RESOURCES;
+
+public class DoGetGame implements Task {
+
     private String resource;
     private Object requestBody;
 
-
-
-    public DoPost withTheResource(String resource){
-        this.resource=resource;
+    public DoGetGame withTheResource(String resource) {
+        this.resource = resource;
         return this;
     }
 
-    public DoPost andTheRequestBody(Object requestBody){
-        this.requestBody=requestBody;
+    public DoGetGame andTheRequestBody(Object requestBody) {
+        this.requestBody = requestBody;
         return this;
     }
+
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                OurPost.to(resource)
+                OurGet.to(resource)
                         .with(
                                 requestSpecification -> requestSpecification.relaxedHTTPSValidation()
                                         .contentType(ContentType.JSON)
-                                        .body(requestBody)
                         )
+
         );
-
     }
 
-    public static DoPost doPost(){
-        return new DoPost();
+    public static DoGetGame doGetGame() {
+        return new DoGetGame();
     }
+
+
 }
