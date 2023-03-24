@@ -1,8 +1,8 @@
 package com.sofkau.utils;
 
 public enum ReqresResources {
-    REQRES_BASE_URL("https://reqres.in/"),
-    REGISTER_SUCCESSFUL_RESOURCE("api/register");
+    REQRES_BASE_URL("https://reqres.in/api"),
+    REGISTER_SUCCESSFUL_RESOURCE("/register");
 
     private final String  value;
 
