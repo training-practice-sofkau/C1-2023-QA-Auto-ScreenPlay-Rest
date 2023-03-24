@@ -6,14 +6,14 @@ Feature: Buscar personajes
   SO THAT
   I ver registro completo del personaje
 
-  @Crear
+  @Get
   Scenario Outline: buscar personajes
     Given el usuario esta en la pagina de busqueda
     When cuando el usuario envia solicitud de busqueda  por id <id>
     Then la pagina retornara un estatus con codigo <codigo> y nombre <nombre>
     Examples:
-      | id  | nombre         | codigo |
-      | "1" | "Rick Sanchez" | "200"  |
-      | "3" | "Rick Sanchez" | "200"  |
-      | "4" | "Rick Sanchez" | "200"  |
-      | "6" | "Rick Sanchez" | "200"  |
+      | id     | nombre         | codigo |
+      | "1"    | "Rick Sanchez" | 200    |
+      | "4"    | "Rick Sanchez" | 200    |
+      | "4"    | "Rick Sanchez" | 200    |
+      | "1000" | "Rick Sanchez" | 404    |
