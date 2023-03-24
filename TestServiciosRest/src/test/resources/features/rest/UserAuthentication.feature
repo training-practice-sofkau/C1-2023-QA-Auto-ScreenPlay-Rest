@@ -1,7 +1,7 @@
-Feature: uthentication to Restful Booker API
+Feature: Authentication to Restful Booker API
   I AS Restful Booke administrator
   I WANT make an authentication in the system
-  SO THAT can enter the system
+  SO THAT I can enter the system
 
   @Register
   Scenario Outline: Authentication Successful
@@ -11,8 +11,8 @@ Feature: uthentication to Restful Booker API
     Examples:
       | username   | password      | code |
       | "admin"    | "password123" | 200  |
-      | "user123"  | "pass123"     | 200  |
-      | "testuser" | "123test"     | 200  |
+      | "user123"  | "pass123"     | 400  |
+      | "testuser" | "123test"     | 400  |
 
 
 
