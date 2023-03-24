@@ -11,5 +11,5 @@ Feature:consulta de publicaciones por id en JSONPlaceholder
     Examples:
       | id   | codigoEstado |
       | "4"  | 200          |
-      | "8"  | 200          |
+      | "12" | 200          |
       | "10" | 200          |

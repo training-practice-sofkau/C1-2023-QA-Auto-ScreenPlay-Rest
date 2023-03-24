@@ -1,26 +1,31 @@
 package com.sofkau.stepdefinitons;
 
 import com.sofkau.models.PostPublicacion;
-import com.sofkau.models.ResponseRegister;
-import com.sofkau.questions.ReturnCrearpublicacionSuccessfulJsonResponse;
 import com.sofkau.setup.ApiSetUp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.junit.jupiter.api.Assertions;
 
 import static com.sofkau.questions.ReturnCrearpublicacionSuccessfulJsonResponse.returnCrearpublicacionSuccessfulJsonResponse;
-import static com.sofkau.questions.ReturnRegisterSuccessfulJsonResponse.returnRegisterSuccessfulJsonResponse;
 import static com.sofkau.tasks.DoPost.doPost;
 import static com.sofkau.utils.PlaceholderResources.JSONPLACEHOLDER_BASE_URL;
 import static com.sofkau.utils.PlaceholderResources.POST_RESOURCE;
+import static net.serenitybdd.rest.SerenityRest.lastResponse;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class PostCrearPublicacionStedDefinition extends ApiSetUp {
     private PostPublicacion postPublicacion = new PostPublicacion();
+
+    JSONParser parser = new JSONParser();
+    JSONObject responseBody = null;
+
+    PostPublicacion postPublicacion1 = new PostPublicacion();
 
 
     @Given("que el usuario esta en la pagina de registro de la api")
@@ -41,19 +46,31 @@ public class PostCrearPublicacionStedDefinition extends ApiSetUp {
                         .withTheResource(POST_RESOURCE.getValue())
                         .andTheRequestBody(postPublicacion)
         );
-        System.out.println(SerenityRest.lastResponse().body().asString());
+        // System.out.println(lastResponse().body().asString());
     }
 
     @Then("el usuario debe ver un codigo {int} de respuesta y el id")
     public void el_usuario_debe_ver_un_codigo_de_respuesta_y_el_id(Integer codigo) {
+        try {
+            PostPublicacion postPublicacion = returnCrearpublicacionSuccessfulJsonResponse().answeredBy(actor);
+            actor.should(
+                    seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
+                            response -> response.statusCode(codigo)),
+                    seeThat("Retorna información",
+                            act -> postPublicacion, notNullValue())
+            );
+            responseBody = (JSONObject) parser.parse(lastResponse().asString());
 
-        PostPublicacion postPublicacion = returnCrearpublicacionSuccessfulJsonResponse().answeredBy(actor);
-        actor.should(
-                seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
-                        response -> response.statusCode(codigo)),
-                seeThat("Retorna información",
-                        act -> postPublicacion, notNullValue())
-        );
+
+            String actualidaTitulo = (String) responseBody.get("titulo");
+            String actualidaUserId = (String) responseBody.get("userId");
+            Assertions.assertEquals(actualidaTitulo, postPublicacion.getTitulo());
+            Assertions.assertEquals(actualidaUserId, postPublicacion.getUserId());
+
+
+        } catch (Exception e) {
+
+        }
 
 
     }

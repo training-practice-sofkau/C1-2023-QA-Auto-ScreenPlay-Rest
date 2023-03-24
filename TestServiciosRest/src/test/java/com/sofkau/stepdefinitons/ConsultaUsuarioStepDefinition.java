@@ -7,6 +7,7 @@ import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
+import org.apache.log4j.Logger;
 
 import static com.sofkau.questions.ReturnConsultaSuccessfulJsonResponse.returnConsultaSuccessfulJsonResponse;
 import static com.sofkau.tasks.DoGet.doGet;
@@ -17,12 +18,13 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class ConsultaUsuarioStepDefinition extends ApiSetUp {
 
+    private static final Logger LOGGER = Logger.getLogger(ConsultaPublicacionesStepDefinition.class.getName());
+
+
     @Given("que el usuario esta en la pagina de registro de usuario")
     public void que_el_usuario_esta_en_la_pagina_de_registro_de_usuario() {
         setUp(JSONPLACEHOLDER_BASE_URL.getValue());
     }
-
-
 
     @When("el usuario envia una peticion get con el {string} del usuario")
     public void el_usuario_envia_una_peticion_get_con_el_del_usuario(String id) {
@@ -33,15 +35,22 @@ public class ConsultaUsuarioStepDefinition extends ApiSetUp {
         System.out.println(SerenityRest.lastResponse().body().asString());
     }
 
-
     @Then("el usuario debe observar un codigo de respuesta {int} y la la informacion del usuario")
     public void el_usuario_debe_observar_un_codigo_de_respuesta_y_la_la_informacion_del_usuario(Integer codigo) {
-        Response actualResponse = returnConsultaSuccessfulJsonResponse().answeredBy(actor);
-        actor.should(
-                seeThatResponse("El codigo de respuesta de la peticion es: " + HttpStatus.SC_OK,
-                        response -> response.statusCode(codigo)),
-                seeThat("Retorna la siguiente información",
-                        act -> actualResponse, notNullValue())
-        );
+        try {
+            Response actualResponse = returnConsultaSuccessfulJsonResponse().answeredBy(actor);
+            actor.should(
+                    seeThatResponse("El codigo de respuesta de la peticion es: " + codigo,
+                            response -> response.statusCode(codigo)),
+                    seeThat("Retorna la siguiente información",
+                            act -> actualResponse, notNullValue())
+            );
+            LOGGER.info("Respuesta status code: " + codigo);
+        }
+        catch (Exception e){
+            LOGGER.error("Error: ", e);
+            throw e;
+        }
+
     }
 }

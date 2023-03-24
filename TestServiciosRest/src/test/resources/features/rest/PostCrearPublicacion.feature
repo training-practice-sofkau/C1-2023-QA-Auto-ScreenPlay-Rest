@@ -11,5 +11,5 @@ Feature:Creacion de publicacion
     Examples:
       | titulo     | body        | userId | code |
       | "Alimento" | "Vegetales" | 1      | 201  |
-     # | "Deporte"  | "natacion"  | 2      | 201  |
-     # | "Musica"   | "Pop"       | 3      | 201  |
+      | "Deporte"  | "natacion"  | 2      | 202  |
+      | "Musica"   | "Pop"       | 3      | 201  |
