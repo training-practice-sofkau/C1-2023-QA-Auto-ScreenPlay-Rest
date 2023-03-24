@@ -1,5 +1,6 @@
 package com.sofkau.stepdefinitons;
 
+import com.sofkau.models.Posts;
 import com.sofkau.setup.ApiSetUp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -9,23 +10,27 @@ import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.simple.JSONValue;
 import org.json.simple.parser.ParseException;
-import org.junit.Assert;
+
 
 
 import static com.sofkau.questions.ReturnGetResponse.returnGetResponse;
 import static com.sofkau.tasks.DoGetPlaceHolder.doGet;
 import static com.sofkau.utils.JSONPlaceHolder.GET_POSTS;
 import static com.sofkau.utils.JSONPlaceHolder.PLACE_HOLDER_BASE_URL;
+import static net.serenitybdd.rest.SerenityRest.lastResponse;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class GetPostsStepDefinition extends ApiSetUp {
 
     private static final Logger LOGGER = Logger.getLogger(GetPostsStepDefinition.class.getName());
+
+    Posts posts = new Posts();
 
     @Given("the JSONPlaceholder API is available")
     public void theJSONPlaceholderAPIIsAvailable() {
@@ -48,11 +53,13 @@ public class GetPostsStepDefinition extends ApiSetUp {
         try {
             LOGGER.info("Realizando peticion GET...");
 
+            posts.setId(id);
+
             actor.attemptsTo(
                     doGet().withTheResource(GET_POSTS.getValue() + id)
             );
 
-            System.out.println(SerenityRest.lastResponse().body().asString());
+            System.out.println(lastResponse().body().asString());
         } catch (Exception e) {
             LOGGER.error("Error durante GET request: " + e.getMessage());
         }
@@ -61,7 +68,13 @@ public class GetPostsStepDefinition extends ApiSetUp {
     @Then("the response status code should be {int}")
     public void theResponseStatusCodeShouldBe(Integer code) throws ParseException {
 
+
         try {
+            /**
+             * En este caso, se llama al método returnGetResponse() que devuelve una solicitud HTTP GET.
+             * Luego, se llama al método answeredBy(actor) que envía la solicitud HTTP y devuelve la respuesta como un objeto Response.
+             */
+
             Response actualResponse = returnGetResponse().answeredBy(actor);
 
             actor.should(

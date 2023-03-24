@@ -12,6 +12,6 @@ Feature: Retrieve Posts from JSONPlaceholder API
       | id    | code |
       | "4"   | 200  |
       | "11"  | 200  |
-      | "13"  | 200  |
-      | "22"  | 200  |
+      | "13 " | 200  |
+      | "*"   | 404  |
       | "101" | 404  |

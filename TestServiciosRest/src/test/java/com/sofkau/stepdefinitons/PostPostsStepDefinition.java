@@ -83,10 +83,14 @@ public class PostPostsStepDefinition extends ApiSetUp {
     public void theResponseShouldContainTheNewPost() throws ParseException {
 
         try {
+
+            //Analiza la respuesta de la solicitud HTTP y convierte su contenido a un objeto JSONObject
             JSONObject jsonResponse = (JSONObject) new JSONParser().parse(lastResponse().asString());
 
+            //Esta línea indica el comienzo de una aserción que utiliza el patrón de diseño Actor
             actor.should(
                     seeThat("El post creado se encuentra en la respuesta",
+                            //Comienzo de la función lambda que implementa la aserción. La función lambda toma un objeto Actor como argumento y devuelve un valor booleano.
                             act -> {
                                 String actualTitle = (String) jsonResponse.get("title");
                                 String actualBody = (String) jsonResponse.get("body");
