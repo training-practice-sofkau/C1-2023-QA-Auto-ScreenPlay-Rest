@@ -1,7 +1,7 @@
 package com.sofkau.models;
 
 
-public class Response {
+public class ResponseRegister extends PostPublicacion {
     private Integer id;
     private String token;
     private String error;
