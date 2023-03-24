@@ -36,12 +36,12 @@ public class ListPokemonStepDefinition extends ApiSetUp {
         LOGGER.info("Inicio de la automatizacion");
     }
 
-    @When("Hago una peticion para listar la info de los pokemones")
-    public void hagoUnaPeticionParaListarLaInfoDeLosPokemones() {
+    @When("Hago una peticion para listar pokes de generacion {string}")
+    public void hagoUnaPeticionParaListarPokesDeGeneracion(String gen) {
         try {
             actor.attemptsTo(
                     doGet()
-                            .withTheResource(GENERATION1_RESOURCE.getValue())
+                            .withTheResource(GENERATION1_RESOURCE.getValue()+gen)
             );
         }catch (Exception e){
             LOGGER.warn(e.getMessage());
@@ -62,8 +62,8 @@ public class ListPokemonStepDefinition extends ApiSetUp {
         }
     }
 
-    @Then("La respuesta debe contener un body con toda la info")
-    public void laRespuestaDebeContenerUnBodyConTodaLaInfo() {
+    @Then("La respuesta debe contener un body con toda la info {string} y {string}")
+    public void laRespuestaDebeContenerUnBodyConTodaLaInfoY(String id, String main_region_name) {
         try {
             Response actualResponse = returnListPokemonResponse().answeredBy(actor);
             resBody = (JSONObject) parser.parse(actualResponse.getBody().asString());
@@ -72,9 +72,9 @@ public class ListPokemonStepDefinition extends ApiSetUp {
                     seeThat("Retorna info",
                             act -> actualResponse, notNullValue()),
                     seeThat("Comparar valores",
-                            id -> resBody.get("id").toString(), equalTo("1")),
+                            ids -> resBody.get("id").toString(), equalTo(id)),
                     seeThat("name de la region",
-                            name_region ->main_region.get("name"),equalTo("kanto"))
+                            name_region ->main_region.get("name"),equalTo(main_region_name))
             );
         }catch (Exception e){
             LOGGER.warn(e.getMessage());

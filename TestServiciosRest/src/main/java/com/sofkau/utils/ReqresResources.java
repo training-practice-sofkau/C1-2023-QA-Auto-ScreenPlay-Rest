@@ -3,7 +3,7 @@ package com.sofkau.utils;
 public enum ReqresResources {
     REQRES_BASE_URL("https://reqres.in/"),
     POKEAPI_BASE_URL("https://pokeapi.co/"),
-    GENERATION1_RESOURCE("api/v2/generation/1/"),
+    GENERATION1_RESOURCE("api/v2/generation/"),
     REGISTER_SUCCESSFUL_RESOURCE("api/register"),
     LOGIN_SUCCESSFUL_RESOURCE("api/login");
 
