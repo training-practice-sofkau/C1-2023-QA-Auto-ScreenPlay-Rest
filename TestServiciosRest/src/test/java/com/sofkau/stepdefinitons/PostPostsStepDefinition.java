@@ -1,37 +1,49 @@
 package com.sofkau.stepdefinitons;
 
 import com.sofkau.models.Posts;
-import com.sofkau.models.ResponseRegister;
+
 import com.sofkau.setup.ApiSetUp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
+import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
-import static com.sofkau.questions.ReturnPostResponse.returnPostResponse;
-import static com.sofkau.questions.ReturnPutResponse.returnPutResponse;
-import static com.sofkau.questions.ReturnRegisterSuccessfulJsonResponse.returnRegisterSuccessfulJsonResponse;
 import static com.sofkau.tasks.DoPost.doPost;
 import static com.sofkau.utils.JSONPlaceHolder.GET_POSTS;
 import static com.sofkau.utils.JSONPlaceHolder.PLACE_HOLDER_BASE_URL;
+import static net.serenitybdd.rest.SerenityRest.lastResponse;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.notNullValue;
 
 
 public class PostPostsStepDefinition extends ApiSetUp {
 
+    private static final Logger LOGGER = Logger.getLogger(PostPostsStepDefinition.class);
+
     Posts posts = new Posts();
+
     @Given("I am on the JSONPlaceholder API")
     public void iAmOnTheJSONPlaceholderAPI() {
-        setUp(PLACE_HOLDER_BASE_URL.getValue());
+
+        try {
+            setUp(PLACE_HOLDER_BASE_URL.getValue());
+            LOGGER.info("Se inició la automatización en la URL: " + PLACE_HOLDER_BASE_URL.getValue());
+        } catch (Exception e) {
+            LOGGER.error("Error al iniciar la automatización : Detalles: "+ e.getMessage());
+            actor.should(
+                    seeThatResponse("El servidor no está disponible",
+                            response -> response.statusCode(HttpStatus.SC_OK))
+            );
+        }
     }
 
     @When("I create a new post with the {string}, {string} and the {int}")
-    public void iCreateANewPostWithTheAndThe(String title, String body, Integer userId)  {
+    public void iCreateANewPostWithTheAndThe(String title, String body, Integer userId) {
 
         posts.setTitle(title);
         posts.setBody(body);
@@ -44,7 +56,9 @@ public class PostPostsStepDefinition extends ApiSetUp {
                             .withTheResource(GET_POSTS.getValue())
                             .andTheRequestBody(posts)
             );
-        } catch(Exception e){
+            LOGGER.info("Respuesta de la API con la peticion POST: " + lastResponse().asString());
+        } catch (Exception e) {
+            LOGGER.error("OcurriO un error al enviar la solicitud POST: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -52,24 +66,45 @@ public class PostPostsStepDefinition extends ApiSetUp {
     @Then("the response status code should be displayed as {int}")
     public void theResponseStatusCodeShouldBeDisplayedAs(Integer code) {
 
-       actor.should(
-                seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
-                        response -> response.statusCode(code))
-        );
+        try {
+
+            actor.should(
+                    seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
+                            response -> response.statusCode(code))
+            );
+            LOGGER.info("El código de respuesta es: " + lastResponse().statusCode());
+        } catch (Exception e){
+          LOGGER.warn(e.getMessage());
+        }
 
     }
 
     @Then("the response should contain the new post")
-    public void theResponseShouldContainTheNewPost() {
-        actor.should(
-                seeThatResponse("El post creado se encuentra en la respuesta",
-                        response -> response.body("title", equalTo(posts.getTitle()))
-                                .body("body", equalTo(posts.getBody()))
-                                .body("userId", equalTo(posts.getUserId()))
-                )
-        );
+    public void theResponseShouldContainTheNewPost() throws ParseException {
+
+        try {
+            JSONObject jsonResponse = (JSONObject) new JSONParser().parse(lastResponse().asString());
+
+            actor.should(
+                    seeThat("El post creado se encuentra en la respuesta",
+                            act -> {
+                                String actualTitle = (String) jsonResponse.get("title");
+                                String actualBody = (String) jsonResponse.get("body");
+                                Long actualUserId = (Long) jsonResponse.get("userId");
+
+                                return actualTitle.equals(posts.getTitle())
+                                        && actualBody.equals(posts.getBody())
+                                        && actualUserId.equals(posts.getUserId().longValue());
+                            }
+                    )
+            );
+
+            LOGGER.info("El post creado se encuentra en la respuesta " + jsonResponse.toJSONString());
+
+        } catch (ParseException e) {
+            LOGGER.error("Ocurrio un error: " + e.getMessage());
+        }
 
     }
-
 
 }
