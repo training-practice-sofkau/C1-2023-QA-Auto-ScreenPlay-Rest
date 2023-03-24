@@ -10,8 +10,8 @@ public class ApiSetUp {
     protected Actor actor = new Actor("Juanes");
 
     protected void setUp(String urlBase){
-       // setUpLog4j();
-        //BasicConfigurator.configure();
+        setUpLog4j();
+        BasicConfigurator.configure();
         actorCallAnApi(urlBase);
     }
 

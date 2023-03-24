@@ -1,17 +1,11 @@
 package com.sofkau.tasks;
-
-import com.sofkau.interactions.OurPost;
 import io.restassured.http.ContentType;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.rest.interactions.Post;
-
 public class DoPost implements Task {
     private String resource;
     private Object requestBody;
-
-
-
     public DoPost withTheResource(String resource){
         this.resource=resource;
         return this;
