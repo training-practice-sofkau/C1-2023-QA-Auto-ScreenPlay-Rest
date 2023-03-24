@@ -43,13 +43,10 @@ public class PostProductsStepDefinition extends ApiSetUp {
     }
 
 
+
     @When("el administrador crea un nuevo producto con {string}, {double}, {string}, {string}, {string}")
     public void elAdministradorCreaUnNuevoProductoCon(String title, Double precio, String descripcion, String imagen, String categoria) {
-        producto.setTitle(title);
-        producto.setPrice(precio);
-        producto.setDescription(descripcion);
-        producto.setImage(imagen);
-        producto.setCategory(categoria);
+        setValores(title, precio, descripcion, imagen, categoria);
         actor.attemptsTo(
                 doPostProducts()
                         .withTheResource(PRODUCT_SUCCESSFUL_RESOURCES.getValue())
@@ -58,6 +55,8 @@ public class PostProductsStepDefinition extends ApiSetUp {
         System.out.println(lastResponse().body().asString());
 
     }
+
+
 
 
     @Then("el administrador debe ver un mensaje con informacion del nuevo producto con un estatus {int}")
@@ -77,11 +76,7 @@ public class PostProductsStepDefinition extends ApiSetUp {
             responseBody = (JSONObject) parser.parse(lastResponse().asString());
             LOGGER.info(" esta es la respuesta ---> " + actualResponse.getTitle() + actualResponse.getCategory());
 
-            // Validar las propiedades "title" y "category"
-            String title = (String) responseBody.get("title");
-            String category = (String) responseBody.get("category");
-            Assertions.assertEquals(title, actualResponse.getTitle());
-            Assertions.assertEquals(category, actualResponse.getCategory());
+            ModeloRespuesta(actualResponse);
         } catch (AssertionError e) {
             LOGGER.warn(e.getMessage());
             Assertions.fail("La validación de la respuesta del servidor ha fallado.");
@@ -90,5 +85,20 @@ public class PostProductsStepDefinition extends ApiSetUp {
         }
     }
 
+    private void ModeloRespuesta(Product actualResponse) {
+        // Validar las propiedades "title" y "category"
+        String title = (String) responseBody.get("title");
+        String category = (String) responseBody.get("category");
+        Assertions.assertEquals(title, actualResponse.getTitle());
+        Assertions.assertEquals(category, actualResponse.getCategory());
+    }
 
+
+    private void setValores(String title, Double precio, String descripcion, String imagen, String categoria) {
+        producto.setTitle(title);
+        producto.setPrice(precio);
+        producto.setDescription(descripcion);
+        producto.setImage(imagen);
+        producto.setCategory(categoria);
+    }
 }
