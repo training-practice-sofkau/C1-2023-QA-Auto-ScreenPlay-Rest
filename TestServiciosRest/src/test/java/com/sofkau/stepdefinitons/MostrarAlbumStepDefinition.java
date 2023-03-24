@@ -7,6 +7,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.rest.SerenityRest;
 import org.junit.jupiter.api.Assertions;
+import org.apache.log4j.Logger;
 
 import static com.sofkau.questions.ReturnLisAlbumJsonResponse.returnLisAlbumJsonResponse;
 import static com.sofkau.tasks.DoGet.doGet;
@@ -15,6 +16,7 @@ import static com.sofkau.utils.JsonPlaceholder.REQRES_BASE_URL;
 
 public class MostrarAlbumStepDefinition extends ApiSetUp {
     private Album album = new Album();
+    public static Logger LOGGER = Logger.getLogger(RegisterStepDefinition.class);
 
     @Given("the user is in the list page")
     public void theUserIsInTheListPage() {
@@ -31,7 +33,7 @@ public class MostrarAlbumStepDefinition extends ApiSetUp {
                 doGet()
                         .withTheResource(resource)
         );
-        System.out.println(SerenityRest.lastResponse().asString());
+        LOGGER.info(SerenityRest.lastResponse().asString());
     }
 
     @Then("the user see a response with property {string}")

@@ -1,8 +1,8 @@
 package com.sofkau.utils;
 
 public enum JsonPlaceholderDelete {
-    REQRES_BASE_URL("https://jsonplaceholder.typicode.com"),
-    LIST_SUCCESSFUL_RESOURCE("/albums/@id");
+    REQRES_BASE_URL_PLACEHOLDER("https://jsonplaceholder.typicode.com"),
+    DELETE_SUCCESSFUL_RESOURCE("/albums/@id");
 
     private final String  value;
 

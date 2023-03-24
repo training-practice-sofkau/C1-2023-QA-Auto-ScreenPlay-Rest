@@ -1,8 +1,8 @@
 package com.sofkau.utils;
 
 public enum JsonPlaceholderPut {
-    REQRES_BASE_URL("https://jsonplaceholder.typicode.com"),
-    LIST_SUCCESSFUL_RESOURCE("/todos/@id");
+    REQRES_BASE_URL_JSON("https://jsonplaceholder.typicode.com"),
+    PUT_SUCCESSFUL_RESOURCE("/todos/@id");
 
     private final String  value;
 

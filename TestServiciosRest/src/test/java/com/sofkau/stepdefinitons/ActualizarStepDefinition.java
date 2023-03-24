@@ -8,27 +8,28 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
+import org.apache.log4j.Logger;
 
 import static com.sofkau.questions.ReturnRegisterSuccessfulJsonResponse.returnRegisterSuccessfulJsonResponse;
 import static com.sofkau.tasks.DoPut.doPut;
-import static com.sofkau.utils.JsonPlaceholder.LIST_SUCCESSFUL_RESOURCE;
-import static com.sofkau.utils.ReqresResources.REGISTER_SUCCESSFUL_RESOURCE;
-import static com.sofkau.utils.ReqresResources.REQRES_BASE_URL;
+import static com.sofkau.utils.JsonPlaceholderPut.PUT_SUCCESSFUL_RESOURCE;
+import static com.sofkau.utils.JsonPlaceholderPut.REQRES_BASE_URL_JSON;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class ActualizarStepDefinition extends ApiSetUp {
     private Todos todos = new Todos();
+    public static Logger LOGGER = Logger.getLogger(RegisterStepDefinition.class);
 
     @Given("the user is in the update page")
     public void theUserIsInTheUpdatePage() {
-        setUp(REQRES_BASE_URL.getValue());
+        setUp(REQRES_BASE_URL_JSON.getValue());
     }
 
     @When("the user send a update request with the {int} the {string} and the {string}")
     public void theUserSendAUpdateRequestWithTheTheAndThe(Integer id, String title, String completed) {
-        String resource = LIST_SUCCESSFUL_RESOURCE.getValue();
+        String resource = PUT_SUCCESSFUL_RESOURCE.getValue();
         resource = resource.replace("@id", id.toString());
         this.todos.setId(id);
 
@@ -36,10 +37,10 @@ public class ActualizarStepDefinition extends ApiSetUp {
         todos.setCompleted(completed);
         actor.attemptsTo(
                 doPut()
-                        .withTheResource(REGISTER_SUCCESSFUL_RESOURCE.getValue())
+                        .withTheResource(resource)
                         .andTheRequestBody(todos)
         );
-        System.out.println(SerenityRest.lastResponse().body().asString());
+        LOGGER.info(SerenityRest.lastResponse().body().asString());
     }
 
     @Then("the user see a status {int} response code")

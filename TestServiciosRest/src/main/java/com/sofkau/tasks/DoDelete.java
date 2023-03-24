@@ -16,7 +16,7 @@ public class DoDelete implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                //Delete.resource(resource)
+                Delete.from(resource)
         );
     }
 
