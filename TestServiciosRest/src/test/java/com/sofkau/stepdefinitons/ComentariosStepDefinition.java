@@ -8,6 +8,7 @@ import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -24,7 +25,8 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 public class ComentariosStepDefinition extends ApiSetUp {
 
     public static Logger LOGGER= Logger.getLogger(PostIDStepDefinition.class);
-    JSONObject responseBody = null;
+    JSONArray responseBody = null;
+    JSONObject firstResponse = null;
     JSONParser parser = new JSONParser();
     String id;
 
@@ -46,7 +48,7 @@ public class ComentariosStepDefinition extends ApiSetUp {
                     doGet()
                             .withTheResource(COMMENTS_BY_POST.getValue() + idPost)
             );
-            System.out.println(SerenityRest.lastResponse().body().asString());
+            //System.out.println(SerenityRest.lastResponse().body().asString());
             LOGGER.info("Peticion realizada");
         } catch (Exception e){
             LOGGER.warn(e.getMessage());
@@ -58,12 +60,17 @@ public class ComentariosStepDefinition extends ApiSetUp {
     public void elUsuarioDebeRecibirUnRespuestaDeStatusYLosComentariosDelPost(Integer code) {
         try {
             Response actualResponse = returnGetResponse().answeredBy(actor);
-            //responseBody = (JSONObject) parser.parse(actualResponse.getBody().asString());
             actor.should(
                     seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
                             response -> response.statusCode(code)),
                     seeThat("Retorna información",
                             act -> actualResponse, notNullValue())
+            );
+            responseBody = (JSONArray) parser.parse(actualResponse.getBody().asString());
+            firstResponse = (JSONObject) responseBody.get(1);
+            actor.should(
+                    seeThat("Comparar id del post",
+                            idC -> firstResponse.get("postId").toString(), equalTo(id))
             );
             LOGGER.info("Asercion exitosa");
         } catch (Exception e){
