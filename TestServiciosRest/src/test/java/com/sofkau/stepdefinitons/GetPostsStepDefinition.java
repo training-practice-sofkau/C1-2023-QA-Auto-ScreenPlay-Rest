@@ -7,11 +7,14 @@ import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.junit.Assert;
 
 
 import static com.sofkau.questions.ReturnGetResponse.returnGetResponse;
-import static com.sofkau.tasks.DoGet.doGet;
+import static com.sofkau.tasks.DoGetPlaceHolder.doGet;
 import static com.sofkau.utils.JSONPlaceHolder.GET_POSTS;
 import static com.sofkau.utils.JSONPlaceHolder.PLACE_HOLDER_BASE_URL;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
