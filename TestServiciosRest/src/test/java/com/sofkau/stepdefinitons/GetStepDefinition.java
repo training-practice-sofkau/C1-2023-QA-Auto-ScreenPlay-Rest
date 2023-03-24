@@ -17,7 +17,6 @@ import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeT
 import static org.hamcrest.CoreMatchers.notNullValue;
 public class GetStepDefinition extends ApiSetUp {
     public static Logger LOGGER = Logger.getLogger(GetStepDefinition.class);
-
     @Given("the user is in the JSON place holder page")
     public void theUserIsInTheJSONPlaceHolderPage() {
         setUp(JSON_PLACE_HOLDER.getValue());

@@ -1,4 +1,4 @@
-Feature: Register Successful
+Feature: Get Successful
   AS  JSON place holder user
   I WANT TO do a request to the system
   SO THAT I can see the page posts

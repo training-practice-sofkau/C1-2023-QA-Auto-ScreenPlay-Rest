@@ -1,4 +1,5 @@
 package com.sofkau.tasks;
+import com.sofkau.interactions.OurPost;
 import io.restassured.http.ContentType;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
@@ -18,7 +19,7 @@ public class DoPost implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                Post.to(resource)
+                OurPost.to(resource)
                         .with(
                                 requestSpecification -> requestSpecification.relaxedHTTPSValidation()
                                         .contentType(ContentType.JSON)
