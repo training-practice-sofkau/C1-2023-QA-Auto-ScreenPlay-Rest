@@ -25,8 +25,10 @@ public class ApiSetUp {
         setUpBases();
     }
 
-
     private void actorCallAnApi(String urlBase){
+        actor.can(CallAnApi.at(urlBase));
+    }
+    private void actorCanCallAnApi(String urlBase){
         actor.can(CallAnApi.at(urlBase));
     }
 
@@ -37,7 +39,12 @@ public class ApiSetUp {
     private void setUpBases(){
         RestAssured.baseURI = BASE_URI;
     }
+
+    private void actorCanCallApi(String urlBase) {
+        actor.can(CallAnApi.at(urlBase));
+    }
 }
+
 
 
 

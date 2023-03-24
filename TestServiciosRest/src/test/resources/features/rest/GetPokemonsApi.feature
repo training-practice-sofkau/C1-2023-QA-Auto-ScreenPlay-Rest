@@ -4,7 +4,7 @@ Feature: Nombre de pokemones
   para poder saber cuales estan registrados
 
   Scenario Outline: Pokemon registrado
-    Given que el usuario necesita consultar que pokemones que estan registrados, se hace la peticion
+    Given que el usuario necesita consultar que pokemons que estan registrados, se hace la peticion
     When se valida que el codigo de respuesta sea exitoso
     Then se validara que en los datos de retorno se encuentre el pokemon '<pokemon>'
 
