@@ -14,4 +14,4 @@ Feature: Update Successful
       | id | title                             | completed | code |
       | 11 | vero rerum temporibus dolor       | true      | 200  |
       | 12 | ipsa repellendus fugit nisi       | true      | 200  |
-      | 7  | illo expedita consequatur quia in | true      | 400  |
+      | 7  | illo expedita consequatur quia in | true      | 200  |

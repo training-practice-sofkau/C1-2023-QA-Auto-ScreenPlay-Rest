@@ -1,6 +1,5 @@
 package com.sofkau.stepdefinitons;
 
-import com.sofkau.models.Response;
 import com.sofkau.models.Todos;
 import com.sofkau.setup.ApiSetUp;
 import io.cucumber.java.en.Given;
@@ -10,7 +9,7 @@ import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
 
-import static com.sofkau.questions.ReturnRegisterSuccessfulJsonResponse.returnRegisterSuccessfulJsonResponse;
+import static com.sofkau.questions.ReturnActualizarJsonResponse.returnActualizarJsonResponse;
 import static com.sofkau.tasks.DoPut.doPut;
 import static com.sofkau.utils.JsonPlaceholderPut.PUT_SUCCESSFUL_RESOURCE;
 import static com.sofkau.utils.JsonPlaceholderPut.REQRES_BASE_URL_JSON;
@@ -45,7 +44,7 @@ public class ActualizarStepDefinition extends ApiSetUp {
 
     @Then("the user see a status {int} response code")
     public void theUserSeeAStatusResponseCode(Integer statusCode) {
-        Response actualResponse= returnRegisterSuccessfulJsonResponse().answeredBy(actor);
+        Todos actualResponse= returnActualizarJsonResponse().answeredBy(actor);
         actor.should(
                 seeThatResponse("El código de respuesta es: " + HttpStatus.SC_OK,
                         response -> response.statusCode(statusCode)),
