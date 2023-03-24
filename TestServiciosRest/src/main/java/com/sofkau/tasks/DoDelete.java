@@ -2,13 +2,13 @@ package com.sofkau.tasks;
 
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
-import net.serenitybdd.screenplay.rest.interactions.Get;
+import net.serenitybdd.screenplay.rest.interactions.Delete;
 
-public class DoGet implements Task {
+public class DoDelete implements Task {
     private String resource;
     private String userId;
 
-    public DoGet withTheResource(String resource){
+    public DoDelete withTheResource(String resource){
         this.resource=resource;
         return this;
     }
@@ -16,11 +16,11 @@ public class DoGet implements Task {
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                Get.resource(resource)
+                //Delete.resource(resource)
         );
     }
 
-    public static DoGet doGet(){
-        return new DoGet();
+    public static DoDelete doDelete(){
+        return new DoDelete();
     }
 }
