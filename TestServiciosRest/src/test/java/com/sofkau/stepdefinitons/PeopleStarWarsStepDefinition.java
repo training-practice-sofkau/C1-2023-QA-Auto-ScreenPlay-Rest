@@ -14,8 +14,7 @@ import org.json.simple.parser.ParseException;
 
 
 import static com.sofkau.tasks.DoGet.doGet;
-import static com.sofkau.utils.SWAPIResources.DARTH_VADER_RESOURSE;
-import static com.sofkau.utils.SWAPIResources.SWAPI_BASE_URL;
+import static com.sofkau.utils.SWAPIResources.*;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,7 +29,7 @@ public class PeopleStarWarsStepDefinition extends ApiSetUp {
     public void theUserMakesARequestWithTheCharacterId(Integer id) {
         actor.attemptsTo(
                 doGet()
-                        .withTheResource(DARTH_VADER_RESOURSE.getValue() + id)
+                        .withTheResource(PEOPLE_RESOURSE.getValue() + id)
         );
         LOGGER.info(SerenityRest.lastResponse().body().asString());
     }
