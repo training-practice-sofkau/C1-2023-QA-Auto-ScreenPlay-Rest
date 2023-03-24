@@ -4,7 +4,7 @@ public enum PlaceholderResources {
 
     JSONPLACEHOLDER_BASE_URL("https://jsonplaceholder.typicode.com/"),
     GET_RESOURCE("posts/"),
-    POST_RESOURCE("/posts");
+    POST_RESOURCE("posts");
 
     private final String  value;
 

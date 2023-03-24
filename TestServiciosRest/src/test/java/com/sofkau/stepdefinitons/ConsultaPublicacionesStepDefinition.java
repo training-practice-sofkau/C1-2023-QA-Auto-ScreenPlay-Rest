@@ -43,5 +43,4 @@ public class ConsultaPublicacionesStepDefinition extends ApiSetUp {
         );
     }
 
-
 }
