@@ -34,7 +34,7 @@ hs_err_pid*
 *screenplayrest/.idea/
 
 #Java
-*build/
+TestServiciosRest/build/
 *screenplayrest/build/
 *out/
 *screenplayrest/out/
