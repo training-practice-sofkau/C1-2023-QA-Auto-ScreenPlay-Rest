@@ -11,7 +11,6 @@ public class DoPost implements Task {
     private Object requestBody;
 
 
-
     public DoPost withTheResource(String resource){
         this.resource=resource;
         return this;
@@ -21,6 +20,7 @@ public class DoPost implements Task {
         this.requestBody=requestBody;
         return this;
     }
+
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(

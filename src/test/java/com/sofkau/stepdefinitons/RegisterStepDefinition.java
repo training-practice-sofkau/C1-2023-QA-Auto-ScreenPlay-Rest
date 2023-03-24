@@ -1,7 +1,7 @@
 package com.sofkau.stepdefinitons;
 
 import com.sofkau.models.Response;
-import com.sofkau.models.User;
+import com.sofkau.models.UserRegister;
 import com.sofkau.setup.ApiSetUp;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -19,7 +19,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 
 public class RegisterStepDefinition extends ApiSetUp {
-    private User user = new User();
+    private UserRegister user = new UserRegister();
 
     String bodyPrueba = "{\n" +
             "    \"email\": \"eve.holt@reqres.in\",\n" +
