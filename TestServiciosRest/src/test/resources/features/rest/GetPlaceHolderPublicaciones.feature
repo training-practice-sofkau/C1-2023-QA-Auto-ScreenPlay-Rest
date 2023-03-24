@@ -3,7 +3,7 @@ Feature:consulta de publicaciones por id en JSONPlaceholder
   quiero realizar una peticion de consulta de publicaciones en Placeholder
   para ver el contenido
 
-  @Consulta
+  @ConsultarPublicaciones
   Scenario Outline:Consulta exitoso
     Given que el usuario esta en la pagina de registro
     When el usuario envia una peticion get con el <id>

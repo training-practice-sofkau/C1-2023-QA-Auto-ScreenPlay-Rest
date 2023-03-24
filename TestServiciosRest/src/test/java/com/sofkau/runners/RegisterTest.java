@@ -9,7 +9,11 @@ import org.junit.runner.RunWith;
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         features = {"src/test/resources/features/rest"},
         glue = {"com.sofkau.stepdefinitons"},
-        tags ={"@RegisterPublicacion"}
+        tags ={"@ConsultarUsuario "}
+        //@ConsultarPublicaciones
+        //@ConsultarUsuario
+        // @RegisterPublicacion
+        //@Register
 
 )
 public class RegisterTest {

@@ -3,7 +3,7 @@ Feature:consultar usuario por id en JSONPlaceholder
   quiero realizar una peticion de consulta de usuario por id en Placeholder
   para ver los usuarios registrados
 
-  @Consulta
+  @ConsultarUsuario
   Scenario Outline:Consulta exitoso
     Given que el usuario esta en la pagina de registro de usuario
     When el usuario envia una peticion get con el <id> del usuario
