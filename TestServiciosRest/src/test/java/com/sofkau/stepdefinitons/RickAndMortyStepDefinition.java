@@ -10,7 +10,6 @@ import org.apache.http.HttpStatus;
 
 import static com.sofkau.questions.ReturnRegisterSuccessfulJsonResponse.returnRegisterSuccessfulJsonResponse;
 import static com.sofkau.tasks.DoGet.doGet;
-import static com.sofkau.utils.ReqresResources.REQRES_BASE_URL;
 import static com.sofkau.utils.RickAndMortyResources.RICK_AND_MORTY_BASE_URL;
 import static com.sofkau.utils.RickAndMortyResources.RICK_AND_MORTY_SELECCION_ID;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
