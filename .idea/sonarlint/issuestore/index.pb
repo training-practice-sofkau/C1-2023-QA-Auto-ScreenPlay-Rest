@@ -11,7 +11,5 @@ m
 =TestServiciosRest/src/main/java/com/sofkau/models/Result.java,c\2\c2972e3421e4b370222c729e87b2a14188fdd7c0
 q
 ATestServiciosRest/src/main/java/com/sofkau/utils/Log4jValues.java,e\0\e09fca40584806b44cb277f6d788662da83f88b7
-…
-UTestServiciosRest/src/test/java/com/sofkau/stepdefinitons/RegisterStepDefinition.java,a\b\ab6246da05e0f1114ceaabb15f87170553e89ee0
 Q
 !TestServiciosRest/settings.gradle,6\8\6847fa37f289c60f4486f7fed4c9a371a297ed4c

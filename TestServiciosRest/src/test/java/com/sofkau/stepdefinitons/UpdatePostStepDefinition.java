@@ -19,7 +19,7 @@ public class UpdatePostStepDefinition extends ApiSetUp {
     private Post originalPost;
     private PutPostRequest putPostRequest;
 
-    @Given("the user has access to the system")
+    @Given("a post already exists in the system")
     public void aPostAlreadyExistsInTheSystem() {
         setUp(JsonPlaceholderResources.BASE_URL.getValue());
         Response response = SerenityRest.when().get(JsonPlaceholderResources.PUT_POST_RESOURCE.getValue());
