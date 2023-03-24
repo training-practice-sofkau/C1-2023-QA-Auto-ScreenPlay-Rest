@@ -1,6 +1,6 @@
 package com.sofkau.stepdefinitons;
 
-import com.sofkau.models.Response;
+import com.sofkau.models.ResponseRegister;
 import com.sofkau.models.User;
 import com.sofkau.setup.ApiSetUp;
 import io.cucumber.java.en.Given;
@@ -45,7 +45,7 @@ public class RegisterStepDefinition extends ApiSetUp {
 
     @Then("the user see a status {int} response code and an id with a token")
     public void theUserSeeAStatusResponseCodeAndAnIdWithAToken(Integer statusCode) {
-        Response actualResponse= returnRegisterSuccessfulJsonResponse().answeredBy(actor);
+        ResponseRegister actualResponse= returnRegisterSuccessfulJsonResponse().answeredBy(actor);
         actor.should(
                 seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
                         response -> response.statusCode(statusCode)),
