@@ -8,6 +8,7 @@ import io.cucumber.java.en.When;
 import net.serenitybdd.rest.SerenityRest;
 import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
+import org.junit.jupiter.api.Assertions;
 
 import static com.sofkau.questions.ReturnActualizarJsonResponse.returnActualizarJsonResponse;
 import static com.sofkau.tasks.DoPut.doPut;
@@ -23,33 +24,48 @@ public class ActualizarStepDefinition extends ApiSetUp {
 
     @Given("the user is in the update page")
     public void theUserIsInTheUpdatePage() {
-        setUp(REQRES_BASE_URL_JSON.getValue());
+        try{
+            setUp(REQRES_BASE_URL_JSON.getValue());
+        }catch (AssertionError error){
+            LOGGER.warn(error.getMessage());
+            Assertions.fail("Respuesta de la petición - inválida");
+        }
     }
 
     @When("the user send a update request with the {int} the {string} and the {string}")
     public void theUserSendAUpdateRequestWithTheTheAndThe(Integer id, String title, String completed) {
-        String resource = PUT_SUCCESSFUL_RESOURCE.getValue();
-        resource = resource.replace("@id", id.toString());
-        this.todos.setId(id);
+        try{
+            String resource = PUT_SUCCESSFUL_RESOURCE.getValue();
+            resource = resource.replace("@id", id.toString());
+            this.todos.setId(id);
 
-        todos.setTitle(title);
-        todos.setCompleted(completed);
-        actor.attemptsTo(
-                doPut()
-                        .withTheResource(resource)
-                        .andTheRequestBody(todos)
-        );
-        LOGGER.info(SerenityRest.lastResponse().body().asString());
+            todos.setTitle(title);
+            todos.setCompleted(completed);
+            actor.attemptsTo(
+                    doPut()
+                            .withTheResource(resource)
+                            .andTheRequestBody(todos)
+            );
+            LOGGER.info(SerenityRest.lastResponse().body().asString());
+        }catch (AssertionError error){
+            LOGGER.warn(error.getMessage());
+            Assertions.fail("Respuesta de la petición - inválida");
+        }
     }
 
     @Then("the user see a status {int} response code")
     public void theUserSeeAStatusResponseCode(Integer statusCode) {
-        Todos actualResponse= returnActualizarJsonResponse().answeredBy(actor);
-        actor.should(
-                seeThatResponse("El código de respuesta es: " + HttpStatus.SC_OK,
-                        response -> response.statusCode(statusCode)),
-                seeThat("Retorna información",
-                        act -> actualResponse, notNullValue())
-        );
+        try{
+            Todos actualResponse= returnActualizarJsonResponse().answeredBy(actor);
+            actor.should(
+                    seeThatResponse("El código de respuesta es: " + HttpStatus.SC_OK,
+                            response -> response.statusCode(statusCode)),
+                    seeThat("Retorna información",
+                            act -> actualResponse, notNullValue())
+            );
+        }catch (AssertionError error){
+            LOGGER.warn(error.getMessage());
+            Assertions.fail("Respuesta de la petición - inválida");
+        }
     }
 }

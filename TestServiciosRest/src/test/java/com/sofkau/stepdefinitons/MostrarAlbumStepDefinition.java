@@ -20,20 +20,30 @@ public class MostrarAlbumStepDefinition extends ApiSetUp {
 
     @Given("the user is in the list page")
     public void theUserIsInTheListPage() {
-        setUp(REQRES_BASE_URL.getValue());
+        try{
+            setUp(REQRES_BASE_URL.getValue());
+        }catch (AssertionError error){
+            LOGGER.warn(error.getMessage());
+            Assertions.fail("Respuesta de la petición - inválida");
+        }
     }
 
     @When("the user send a list request with the {int}")
     public void theUserSendAListRequestWithThe(Integer id) {
-        String resource = LIST_SUCCESSFUL_RESOURCE.getValue();
-        resource = resource.replace("@id", id.toString());
-        this.album.setId(id);
+        try{
+            String resource = LIST_SUCCESSFUL_RESOURCE.getValue();
+            resource = resource.replace("@id", id.toString());
+            this.album.setId(id);
 
-        actor.attemptsTo(
-                doGet()
-                        .withTheResource(resource)
-        );
-        LOGGER.info(SerenityRest.lastResponse().asString());
+            actor.attemptsTo(
+                    doGet()
+                            .withTheResource(resource)
+            );
+            LOGGER.info(SerenityRest.lastResponse().asString());
+        }catch (AssertionError error){
+            LOGGER.warn(error.getMessage());
+            Assertions.fail("Respuesta de la petición - inválida");
+        }
     }
 
     @Then("the user see a response with property {string}")
