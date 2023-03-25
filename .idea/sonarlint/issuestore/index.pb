@@ -11,8 +11,6 @@ w
 G.idea/sonarlint/issuestore/e/0/e09fca40584806b44cb277f6d788662da83f88b7,0\0\00a8dabdf52d6eeb5af2236d75d16ab0cea724ea
 w
 G.idea/sonarlint/issuestore/c/2/c2972e3421e4b370222c729e87b2a14188fdd7c0,b\3\b3e6861f268f0396aa7d2d1342b861aed1ed83df
-S
-#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
 m
 =TestServiciosRest/src/main/java/com/sofkau/models/Result.java,c\2\c2972e3421e4b370222c729e87b2a14188fdd7c0
 N
@@ -51,5 +49,3 @@ o
 ?TestServiciosRest/src/test/java/com/sofkau/runners/PutTest.java,3\e\3e82ceafac6b20c6b035924260a22b45f7da2d7b
 u
 ETestServiciosRest/src/test/java/com/sofkau/runners/PokeApiRunner.java,3\e\3e1e7512be6de1721cc2234eb5fd15b01c4bd739
-t
-DTestServiciosRest/src/test/java/com/sofkau/runners/RegisterTest.java,c\4\c44086c7a6e7f833e1f0ac72f08f410b63b6783d
