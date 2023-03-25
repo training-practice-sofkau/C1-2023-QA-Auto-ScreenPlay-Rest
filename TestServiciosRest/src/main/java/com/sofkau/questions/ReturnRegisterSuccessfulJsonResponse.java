@@ -8,6 +8,7 @@ import net.serenitybdd.screenplay.Question;
 public class ReturnRegisterSuccessfulJsonResponse implements Question<Response> {
     @Override
     public Response answeredBy(Actor actor) {
+
         return SerenityRest.lastResponse().as(Response.class);
     }
 

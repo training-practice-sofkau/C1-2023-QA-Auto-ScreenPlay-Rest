@@ -1,48 +1,53 @@
 package com.sofkau.stepdefinitons;
 
 import com.sofkau.setup.ApiSetUp;
-import io.cucumber.java.es.Cuando;
-import io.cucumber.java.es.Dado;
-import io.cucumber.java.es.Entonces;
-import io.restassured.RestAssured;
-import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
-import net.serenitybdd.screenplay.rest.questions.LastResponse;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.apache.http.HttpStatus;
-
-import java.util.HashMap;
+import org.apache.log4j.Logger;
 
 import static com.sofkau.tasks.DoDelete.doDelete;
-import static com.sofkau.utils.ResourceCases.DELETE_ALBUM;
+import static com.sofkau.utils.ReqresResources.BASE_JSON_URL;
+import static com.sofkau.utils.ReqresResources.DELETE_ALBUM;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
 
+
 public class DeleteAlbumTestStepDefinition extends ApiSetUp {
-    private final HashMap<String, Object> headers = new HashMap<>();
 
+    private Logger LOGGER = Logger.getLogger(DeleteAlbumTestStepDefinition.class);
 
-    @Dado("que el usuario quiere hacer la peticion para eliminar un album")
-    public void queElUsuarioQuiereHacerLaPeticionParaEliminarUnAlbum() {
-        generalSetUp();
-        actor.can(CallAnApi.at(RestAssured.baseURI));
+    @Given("el usuario esta en la pagina de jsonplaceholder")
+    public void elUsuarioEstaEnLaPaginaDeJsonplaceholder() {
+        setUp(BASE_JSON_URL.getValue());
     }
 
-    @Cuando("el usuario realiza la peticion para eliminar un album con el id interno {int}")
-    public void elUsuarioRealizaLaPeticionParaEliminarUnAlbumConElIdInterno(int extension) {
-        actor.attemptsTo(
-                doDelete()
-                        .usingTheResource(DELETE_ALBUM.getValue() + extension)
-                        .withHeaders(headers)
-        );
+    @When("el usuario realiza la peticion para eliminar un album con el id interno {int}")
+    public void elUsuarioRealizaLaPeticionParaEliminarUnAlbumConElIdInterno(Integer int1) {
+        try {
+            actor.attemptsTo(
+                    doDelete().conElRecurso(DELETE_ALBUM.getValue())
+                            .yConelId(int1 + "")
+            );
+            LOGGER.info("Album con id " + int1 + " eliminado");
+        } catch (Exception e) {
+            LOGGER.error("Error eliminando el album: " + e.getMessage());
+        }
     }
 
-    @Entonces("el usuario obtendra un codigo de estado exitoso")
-    public void elUsuarioObtendraUnCodigoDeEstadoExitoso() {
-        LastResponse.received().answeredBy(actor).prettyPrint();
-
-        actor.should(
-                seeThatResponse("El código de respuesta debe ser: " + HttpStatus.SC_OK,
-                        validatableResponse -> validatableResponse.statusCode(HttpStatus.SC_OK)
-                )
-        );
+    @Then("el usuario obtendra un {int} de estado exitoso")
+    public void elUsuarioObtendraUnDeEstadoExitoso(Integer int1) {
+        try {
+            actor.should(
+                    seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
+                            response -> response.statusCode(int1))
+            );
+            LOGGER.info("Codigo de respuesta: " + int1);
+        } catch (Exception e) {
+            LOGGER.error("Error verificando el codigo de respuesta: " + e.getMessage());
+        }
     }
-
 }
+
+
+

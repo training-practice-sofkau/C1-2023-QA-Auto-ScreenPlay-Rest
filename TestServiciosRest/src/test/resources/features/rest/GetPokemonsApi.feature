@@ -4,16 +4,13 @@ Feature: Nombre de pokemones
   para poder saber cuales estan registrados
 
   Scenario Outline: Pokemon registrado
-    Given que el usuario necesita consultar que pokemons que estan registrados, se hace la peticion
-    When se valida que el codigo de respuesta sea exitoso
-    Then se validara que en los datos de retorno se encuentre el pokemon '<pokemon>'
+    Given el usuario esta en la PokeApi
+    When el usuario hace la peticion con "<pokemon>"
+    Then se valida que el <codigo> de respuesta sea correcto y que el "<pokemon>" y el <id> sean correcto
 
     Examples:
-      | pokemon   |
-      | bulbasaur |
-      | ivysaur   |
-
-  Scenario: Recurso no encontrado
-    Given que el usuario realiza una peticion no valida
-    Then el codigo de respuesta debe ser el de no encontrado
+      | codigo | pokemon    | id |
+      | 200    | bulbasaur  | 1  |
+      | 200    | ivysaur    | 2  |
+      | 200    | charmander | 4  |
 

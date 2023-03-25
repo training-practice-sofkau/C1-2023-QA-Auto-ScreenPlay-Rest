@@ -9,29 +9,24 @@ import java.util.HashMap;
 
 public class DoDelete implements Task {
     private String resource;
-    private HashMap<String, Object> headers = new HashMap<>();
+    private String id;
 
-    public DoDelete usingTheResource(String resource) {
+    public DoDelete conElRecurso(String resource) {
         this.resource = resource;
         return this;
     }
 
-    public DoDelete withHeaders(HashMap<String, Object> headers) {
-        this.headers = headers;
+    public DoDelete yConelId(String id) {
+        this.id = id;
         return this;
-    }
 
+    }
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                Delete.from(resource)
-                        .with(requestSpecification -> requestSpecification.relaxedHTTPSValidation()
-                                .contentType(ContentType.JSON)
-                                .headers(headers)
-                        )
+                Delete.from(resource+id)
         );
     }
-
-    public static DoDelete doDelete () { return new DoDelete() ;}
+    public static DoDelete doDelete() { return new DoDelete() ;}
 }
 

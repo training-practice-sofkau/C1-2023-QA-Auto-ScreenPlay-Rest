@@ -1,17 +1,17 @@
 package com.sofkau.questions;
 
-import com.sofkau.models.Pokemons;
+import com.sofkau.models.Pokemon;
 import com.sofkau.models.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
 
-public class GetPokemons implements Question {
+public class GetPokemons implements Question<Pokemon>{
     @Override
-    public Pokemons answeredBy(Actor actor) {
-        return SerenityRest.lastResponse().as(Pokemons.class);
+    public Pokemon answeredBy(Actor actor)
+    {
+        return SerenityRest.lastResponse().as(Pokemon.class);
     }
-
     public static GetPokemons getPokemons(){
         return new GetPokemons();
     }

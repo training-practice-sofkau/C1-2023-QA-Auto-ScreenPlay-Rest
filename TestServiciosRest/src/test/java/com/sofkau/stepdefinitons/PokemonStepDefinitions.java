@@ -1,84 +1,65 @@
 package com.sofkau.stepdefinitons;
-
-import com.sofkau.models.Result;
-import com.sofkau.questions.GetPokemons;
-import com.sofkau.tasks.DoGetPokemon;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.sofkau.setup.ApiSetUp;
+import net.serenitybdd.screenplay.ensure.Ensure;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.rest.abilities.CallAnApi;
-import com.sofkau.questions.ResponseCode;
+import net.serenitybdd.rest.SerenityRest;
+import org.apache.http.HttpStatus;
+import org.apache.log4j.Logger;
+import static com.sofkau.tasks.DoGetPokemon.doGetPokemon;
+import static com.sofkau.utils.ReqresResources.POKEMON;
+import static com.sofkau.utils.ReqresResources.POKE_API_URL;
 import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
-import static org.apache.http.HttpStatus.SC_NOT_FOUND;
-import static org.apache.http.HttpStatus.SC_OK;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
+import static org.hamcrest.Matchers.notNullValue;
 
 
-public class PokemonStepDefinitions {
+public class PokemonStepDefinitions extends ApiSetUp {
 
-    private static final String restApiUrl = "https://pokeapi.co/api";
-    Actor actor;
+    private Logger LOGGER = Logger.getLogger(PokemonStepDefinitions.class);
 
-    @Given("que el usuario necesita consultar que pokemons que estan registrados, se hace la peticion")
-    public void queElUsuarioNecesitaConsultarQuepokemonsQueEstanRegistradosSeHaceLaPeticion() {
-        actor = Actor.named("James")
-                .whoCan(CallAnApi.at(restApiUrl));
-        actor.attemptsTo(
-                DoGetPokemon.fromPage("/pokemon")
-        );
+    @Given("el usuario esta en la PokeApi")
+    public void elUsuarioEstaEnLaPokeApi() {
+        setUp(POKE_API_URL.getValue());
     }
 
-    @When("se valida que el codigo de respuesta sea exitoso")
-    public void seValidaQueElCodigoDeRespuestaSeaExitoso() {
-        actor.should(
-                seeThat("El codigo de respuesta", ResponseCode.was(), equalTo(SC_OK))
-        );
+    @When("el usuario hace la peticion con {string}")
+    public void elUsuarioHaceLaPeticionCon(String arg1) {
+        try {
+            actor.attemptsTo(
+                    doGetPokemon().conElRecurso(POKEMON.getValue())
+                            .yConElPokemon(arg1)
+            );
+        } catch (Exception e) {
+            LOGGER.error("Error making request: " + e.getMessage());
+        }
     }
 
-    @Then("se validara que en los datos de retorno se encuentre el pokemon")
-    public void SeValidaraQueEnLosDatosDeRetornoSeEncuentreElPokemon(String pokemon) {
-        Result pokemons = new GetPokemons().answeredBy(actor).getResults().stream()
-                .filter(x -> x.getName().equals(pokemon)).findFirst().orElse(null);
-
-        actor.should(
-                seeThat("La respuesta ", act -> pokemons, notNullValue())
-        );
-
-        actor.should(
-                seeThat("Nombre del pokemon", act -> pokemons.getName(), equalTo(pokemon))
-        );
-    }
-
-    @Then("se validara que en los datos de retorno se encuentre el pokemon {string}")
-    public void seValidaraQueEnLosDatosDeRetornoSeEncuentreElPokemon(String pokemon) {
-        Result pokemons = new GetPokemons().answeredBy(actor).getResults().stream()
-                .filter(x -> x.getName().equals(pokemon)).findFirst().orElse(null);
-
-        actor.should(
-                seeThat("La respuesta ", act -> pokemons, notNullValue())
-        );
-
-        actor.should(
-                seeThat("Nombre del pokemon", act -> pokemons.getName(), equalTo(pokemon))
-        );
-    }
-
-    @Given("que el usuario realiza una peticion no valida")
-    public void QueElUsuarioRealizaUnaPeticionNoValida() {
-        actor = Actor.named("James")
-                .whoCan(CallAnApi.at(restApiUrl));
-        actor.attemptsTo(
-                DoGetPokemon.fromPage("/pokemonx")
-        );
-
-    }
-
-    @Then("el codigo de respuesta debe ser el de no encontrado")
-    public void ElCodigoDeRespuestaDebeSerElDeNoEncontrado() {
-        actor.should(
-                seeThat("El codigo de respuesta", ResponseCode.was(), equalTo(SC_NOT_FOUND))
-        );
+    @Then("se valida que el {int} de respuesta sea correcto y que el {string} y el {int} sean correcto")
+    public void seValidaQueElDeRespuestaSeaCorrectoYQueElYElSeanCorrecto(Integer int1, String arg1, Integer int2) {
+        try {
+            Gson gson = new Gson();
+            JsonObject element = gson.fromJson(SerenityRest.lastResponse().getBody().asString(), JsonObject.class);
+            actor.should(
+                    seeThatResponse("El codigo de respuesta es: " + HttpStatus.SC_OK,
+                            response -> response.statusCode(int1)),
+                    seeThat("Retorna información",
+                            act -> SerenityRest.lastResponse(), notNullValue())
+            );
+            actor.attemptsTo(
+                    Ensure.that(element.get("id").getAsString()).isEqualTo(int2 + "")
+            );
+            String pokemonId = element.get("id").getAsString();
+            String pokemonCode = SerenityRest.lastResponse().getStatusCode() + "";
+            String pokemonName = element.get("name").getAsString();
+            LOGGER.info("Pokemon ID: " + pokemonId);
+            LOGGER.info("Pokemon Code: " + pokemonCode);
+            LOGGER.info("Pokemon Name: " + pokemonName);
+        } catch (Exception e) {
+            LOGGER.error("Error validating response: " + e.getMessage());
+        }
     }
 }

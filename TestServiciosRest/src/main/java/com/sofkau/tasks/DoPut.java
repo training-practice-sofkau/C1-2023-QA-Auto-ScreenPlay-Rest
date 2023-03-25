@@ -1,21 +1,20 @@
 package com.sofkau.tasks;
 
-import com.sofkau.models.PutPostRequest;
 import io.restassured.http.ContentType;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.rest.interactions.Put;
 
-public class PutPostTask implements Task {
+public class DoPut implements Task {
     private String resource;
-    private PutPostRequest requestBody;
+    private Object requestBody;
 
-    public PutPostTask withResource(String resource) {
+    public DoPut withResource(String resource) {
         this.resource = resource;
         return this;
     }
 
-    public PutPostTask andRequestBody(PutPostRequest requestBody) {
+    public DoPut andRequestBody(Object requestBody) {
         this.requestBody = requestBody;
         return this;
     }
@@ -31,7 +30,7 @@ public class PutPostTask implements Task {
         );
     }
 
-    public static PutPostTask putPost() {
-        return new PutPostTask();
+    public static DoPut doPut() {
+        return new DoPut();
     }
 }

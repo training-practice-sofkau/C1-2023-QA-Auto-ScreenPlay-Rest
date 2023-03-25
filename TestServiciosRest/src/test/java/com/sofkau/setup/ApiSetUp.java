@@ -15,7 +15,7 @@ public class ApiSetUp {
     private static final String BASE_URI = "https://jsonplaceholder.typicode.com";
 
     protected void setUp(String urlBase){
-       // setUpLog4j();
+       setUpLog4j();
         //BasicConfigurator.configure();
         actorCallAnApi(urlBase);
     }
@@ -44,6 +44,7 @@ public class ApiSetUp {
         actor.can(CallAnApi.at(urlBase));
     }
 }
+
 
 
 

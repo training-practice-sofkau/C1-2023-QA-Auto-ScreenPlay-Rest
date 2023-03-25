@@ -9,25 +9,29 @@ import net.serenitybdd.screenplay.rest.interactions.Get;
 import static net.serenitybdd.screenplay.Tasks.instrumented;
 
 public class DoGetPokemon implements Task {
+    private String resource;
+    private String pokemon;
 
-    private final String page;
-
-    public DoGetPokemon(String page) {
-        this.page = page;
+    public DoGetPokemon conElRecurso(String resource){
+        this.resource = resource;
+        return this;
     }
-
-    public static Performable fromPage(String page) {
-        return instrumented(DoGetPokemon.class, page);
+    public DoGetPokemon yConElPokemon(String pokemon){
+        this.pokemon = pokemon;
+        return this;
     }
-
     @Override
     public <T extends Actor> void performAs(T actor) {
         actor.attemptsTo(
-                Get.resource("/v2" + page)
-                        .with(requestSpecification
-                                -> requestSpecification.contentType(ContentType.JSON)
-                                .header("header1", "value1")
-                        )
+                Get.resource(resource+pokemon)
         );
     }
+    public static DoGetPokemon doGetPokemon(){
+        return new DoGetPokemon();
+    }
+
+
+
+
+
 }

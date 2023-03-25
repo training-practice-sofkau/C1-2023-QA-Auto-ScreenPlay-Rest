@@ -1,26 +1,9 @@
 package com.sofkau.models;
 
 public class Post {
-    private int id;
-    private int userId;
     private String title;
     private String body;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public String getTitle() {
         return title;
@@ -37,5 +20,4 @@ public class Post {
     public void setBody(String body) {
         this.body = body;
     }
-    // Getters and Setters
 }
