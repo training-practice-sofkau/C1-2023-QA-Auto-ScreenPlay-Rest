@@ -1,9 +1,8 @@
 package com.sofkau.stepdefinitons;
 
+import com.sofkau.models.Album;
 import com.sofkau.models.Response;
-import com.sofkau.models.User;
 import com.sofkau.setup.ApiSetUp;
-import com.sofkau.utils.JsonPlaceholder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,53 +12,51 @@ import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 
 import static com.sofkau.questions.ReturnRegisterSuccessfulJsonResponse.returnRegisterSuccessfulJsonResponse;
-import static com.sofkau.tasks.DoPost.doPost;
-import static com.sofkau.utils.ReqresResources.REGISTER_SUCCESSFUL_RESOURCE;
+import static com.sofkau.tasks.DoDelete.doDelete;
+import static com.sofkau.utils.JsonPlaceholderDelete.DELETE_SUCCESSFUL_RESOURCE;
+import static com.sofkau.utils.JsonPlaceholderDelete.REQRES_BASE_URL_PLACEHOLDER;
 import static com.sofkau.utils.ReqresResources.REQRES_BASE_URL;
-import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
-import static org.hamcrest.CoreMatchers.notNullValue;
 
-public class RegisterStepDefinition extends ApiSetUp {
-    private User user = new User();
+public class DeleteStepDefinition extends ApiSetUp {
+    private Album album = new Album();
     public static Logger LOGGER = Logger.getLogger(RegisterStepDefinition.class);
 
-    @Given("the user is in the register page")
-    public void theUserIsInTheRegisterPage() {
+    @Given("the user is in the delete page")
+    public void theUserIsInTheDeletePage() {
         try{
-            setUp(REQRES_BASE_URL.getValue());
+            setUp(REQRES_BASE_URL_PLACEHOLDER.getValue());
         }catch (AssertionError error){
             LOGGER.warn(error.getMessage());
             Assertions.fail("Respuesta de la petición - inválida");
         }
     }
 
-    @When("the user send a registration request with the {string} and the {string}")
-    public void theUserSendARegistrationRequestWithTheAndThe(String email, String password) {
+    @When("the user send a Delete request with the {int}")
+    public void theUserSendADeleteRequestWithThe(Integer id) {
         try{
-            user.setEmail(email);
-            user.setPassword(password);
+            String resource = DELETE_SUCCESSFUL_RESOURCE.getValue();
+            resource = resource.replace("@id", id.toString());
+            this.album.setId(id);
+
             actor.attemptsTo(
-                    doPost()
-                            .withTheResource(REGISTER_SUCCESSFUL_RESOURCE.getValue())
-                            .andTheRequestBody(user)
+                    doDelete()
+                            .withTheResource(resource)
             );
-            LOGGER.info(SerenityRest.lastResponse().body().asString());
+            LOGGER.info(SerenityRest.lastResponse().asString());
         }catch (AssertionError error){
             LOGGER.warn(error.getMessage());
             Assertions.fail("Respuesta de la petición - inválida");
         }
     }
 
-    @Then("the user see a status {int} response code and an id with a token")
-    public void theUserSeeAStatusResponseCodeAndAnIdWithAToken(Integer statusCode) {
+    @Then("the user see a response with property title that was removed and a correct status code {int}")
+    public void theUserSeeAResponseWithPropertyTitleThatWasRemovedAndACorrectStatusCode(Integer statusCode) {
         try{
             Response actualResponse= returnRegisterSuccessfulJsonResponse().answeredBy(actor);
             actor.should(
                     seeThatResponse("El código de respuesta es: " + HttpStatus.SC_OK,
-                            response -> response.statusCode(statusCode)),
-                    seeThat("Retorna información",
-                            act -> actualResponse, notNullValue())
+                            response -> response.statusCode(statusCode))
             );
         }catch (AssertionError error){
             LOGGER.warn(error.getMessage());

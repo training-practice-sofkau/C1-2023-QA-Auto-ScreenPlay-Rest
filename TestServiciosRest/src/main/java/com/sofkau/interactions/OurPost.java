@@ -10,9 +10,11 @@ import static net.serenitybdd.screenplay.rest.abilities.CallAnApi.as;
 public class OurPost extends RestInteraction {
 
     private final String resource;
+
     public OurPost(String resource){
         this.resource=resource;
     }
+
     @Step("{0} executes a POST on the resource #resource")
     @Override
     public <T extends Actor> void performAs(T actor) {

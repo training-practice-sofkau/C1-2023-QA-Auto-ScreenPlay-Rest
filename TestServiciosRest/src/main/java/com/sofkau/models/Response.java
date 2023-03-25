@@ -1,6 +1,5 @@
 package com.sofkau.models;
 
-
 public class Response {
     private Integer id;
     private String token;
