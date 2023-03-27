@@ -40,6 +40,7 @@ dependencies {
     implementation group: 'net.serenity-bdd', name: 'serenity-ensure', version: serenityVersion
     implementation group: 'net.serenity-bdd', name: 'serenity-screenplay-rest', version: serenityVersion
     implementation group: 'net.serenity-bdd', name: 'serenity-cucumber5', version: serenityCucumberVersion
+    testImplementation 'io.rest-assured:json-path:4.4.0'
     implementation group: 'log4j', name: 'log4j', version: '1.2.17'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.3'
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.11.3'
