@@ -8,8 +8,8 @@ Feature: Register Successful
   @Register
   Scenario Outline: Register Successful
     Given the user is in the register page
-    When the user send a registration request with the <email> and the <password>
-    Then the user see a status <code> response code and an id with a token
+    When the user sends a registration request with the <email> and the <password>
+    Then the user sees a status <code> response code and an id with a token
     Examples:
       | email                    | password     | code |
       | "eve.holt@reqres.in"     | "pistol"     | 200  |
