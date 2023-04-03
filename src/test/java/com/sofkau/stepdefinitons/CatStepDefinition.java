@@ -25,21 +25,30 @@ public class CatStepDefinition extends ApiSetUp {
 
     @When("I send a GET request for random trivia")
     public void iSendAGETRequestForRandomTrivia() {
-        response = given().when().get();
+        try {
+            response = given().when().get();
+        } catch (Exception e) {
+            LOGGER.error("Error al enviar la petición GET para obtener trivia: " + e.getMessage());
+            throw e;
+        }
     }
 
     @Then("I see a {string} status response and a JSON structure")
     public void iSeeAStatusResponseAndAJSONStructure(String status) {
+        try {
+            int lengthValue = response.then().extract().path("length");
+            actor.should(seeThat("La longitud es mayor que cero", value -> lengthValue, greaterThan(0))
+                    .orComplainWith(AssertionError.class,"la longitud en menor o igual a cero"));
+            LOGGER.info("La longitud es mayor que cero: " + lengthValue);
 
-        int lengthValue = response.then().extract().path("length");
-        actor.should(seeThat("La longitud es mayor que cero", value -> lengthValue, greaterThan(0))
-                .orComplainWith(AssertionError.class,"la longitud en menor o igual a cero"));
-        LOGGER.info("La longitud es mayor que cero: " + lengthValue);
-
-        String factValue = response.then().extract().path("fact");
-        actor.should(seeThat("El valor de la propiedad 'fact' no esta vacia", actor1 -> factValue, notNullValue())
-                .orComplainWith(AssertionError.class,"El valor de la propiedad 'fact' esta vacia o nula"));
-        LOGGER.info("El valor de la propiedad 'fact' no esta vacia: " + factValue);
+            String factValue = response.then().extract().path("fact");
+            actor.should(seeThat("El valor de la propiedad 'fact' no esta vacia", actor1 -> factValue, notNullValue())
+                    .orComplainWith(AssertionError.class,"El valor de la propiedad 'fact' esta vacia o nula"));
+            LOGGER.info("El valor de la propiedad 'fact' no esta vacia: " + factValue);
+        } catch (Exception e) {
+            LOGGER.error("Error al analizar la respuesta de la petición GET: " + e.getMessage());
+            throw e;
+        }
     }
 
 }

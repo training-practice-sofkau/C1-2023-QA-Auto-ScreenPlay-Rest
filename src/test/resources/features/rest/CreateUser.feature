@@ -15,3 +15,4 @@ Feature: Create a user in the API
       | "morphy" | "leader"  | 201  |
       | "maxi"   | "captain" | 201  |
       | "jesi"   | "teacher" | 201  |
+      | ","      | ""        | 201  |
